@@ -136,4 +136,30 @@ public class Bill {
 
         return output;
     }
+    // deleting bill
+    public String deleteBill(String billID) {
+        String output = "";
+
+        try {
+            Connection connection = DBConnection.connect();
+
+            if (connection == null) {
+                return "Error while connecting database for deleting bill";
+            }
+
+            String sql = "DELETE FROM Bill WHERE billID = ? ";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, Integer.parseInt(billID));
+            preparedStatement.execute();
+
+            connection.close();
+
+            output = "Bill deleted successfully";
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            output = "Error while deleting bill";
+        }
+        return output;
+    }
 }
