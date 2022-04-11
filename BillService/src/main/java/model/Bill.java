@@ -71,5 +71,69 @@ public class Bill {
 
         return output;
     }
+    
+    // read bills by customerID ID
+    public String readCustomerBills(String customerID) {
+        String output = "";
+            
+        try {
+            Connection connection = DBConnection.connect();
 
+            if (connection == null) {
+                return "Error while connecting database for reading bills by connection";
+            }
+
+            // Prepare the html table to be displayed
+            output = "<table border=\"1\">" 
+                        + "<tr>"
+                            + "<th>Bill ID</th>" + "<th>Connection ID</th>" + "<th>Customer ID</th>"
+                            + "<th>Customer Name</th>" + "<th>Issued Date</th>" + "<th>Due Date</th>"
+                            + "<th>Units</th>" + "<th>Amount</th>" + "<th>Payment Status</th>"
+                        + "</tr>";
+
+            // sql statement to retrieve bills by connection ID
+            String sql =    "SELECT * " +
+                            "FROM Bill B, Connection C, Customer U " + 
+                            "WHERE B.connectionID = C.connectionID and C.customerID = U.customerID and U.customerID = ?";
+
+            // binding connectionID and executing the query
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, Integer.parseInt(customerID));
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            BillBean billBean = new BillBean();
+
+            // looping through the rows
+            while (resultSet.next()) {
+                billBean.setBillID(resultSet.getInt("billID"));
+                billBean.setConnectionID(resultSet.getInt("connectionID"));
+                billBean.setPaymentID(resultSet.getInt("paymentID"));
+                billBean.setIssuedDate(resultSet.getString("issuedDate"));
+                billBean.setDueDate(resultSet.getString("dueDate"));
+                billBean.setStatus(resultSet.getString("status"));
+                billBean.setAmount(resultSet.getDouble("amount"));
+
+                // add the data to the html table
+                output += "<tr><td>" + billBean.getBillID() + "</td>";
+                output += "<td>" + billBean.getConnectionID() + "</td>";
+                output += "<td>" + billBean.getCustomerID() + "</td>";
+                output += "<td>" + billBean.getCustomerName() + "</td>";
+                output += "<td>" + billBean.getIssuedDate() + "</td>";
+                output += "<td>" + billBean.getDueDate() + "</td>";
+                output += "<td>" + billBean.getUnits() + "</td>";
+                output += "<td>" + billBean.getAmount() + "</td>";
+                output += "<td>" + billBean.getStatus() + "</td></tr>";
+            }
+            
+            connection.close();
+
+            output += "</table>";
+            
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            output = "Error while reading bills by customer ID";
+        }
+
+        return output;
+    }
 }
