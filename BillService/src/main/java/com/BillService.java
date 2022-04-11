@@ -19,4 +19,12 @@ public class BillService {
 		return output;
 	}
 
+	// get bills by customer ID
+	@GET
+	@Path("/customer/{customerID}")
+	@Produces(MediaType.TEXT_HTML)
+	public String readCustomerBills(@PathParam("customerID") String customerID) {
+		String output = billObject.readCustomerBills(customerID);
+		return output;
+	}
 }
