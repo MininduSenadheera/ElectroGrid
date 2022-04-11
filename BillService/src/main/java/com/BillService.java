@@ -27,4 +27,12 @@ public class BillService {
 		String output = billObject.readCustomerBills(customerID);
 		return output;
 	}
+	// delete bill
+	@DELETE
+	@Path("/{billID}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteBill(@PathParam("billID") String billID) {
+		String output = billObject.deleteBill(billID);
+		return output;
+	}
 }
