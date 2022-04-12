@@ -74,7 +74,7 @@ public class Bill {
         return output;
     }
     
-    // read bills by customerID ID
+    // read bills by customerID
     public String readCustomerBills(String customerID) {
         String output = "";
             
@@ -141,6 +141,35 @@ public class Bill {
 
         return output;
     }
+
+    // updating bill
+    public String updateBill(BillBean billBean) {
+		String output = ""; 
+
+		try {
+			Connection connection = DBConnection.connect(); 
+			
+			if (connection == null) {
+				return "Error while connecting to the database for updating bill."; 
+			}
+
+            String sql = " UPDATE Bill SET paymentID = ?, status = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, billBean.getPaymentID());
+            preparedStatement.setString(2, "Paid");
+            preparedStatement.execute();
+
+			connection.close();
+			
+			output = "Bill updated successfully"; 
+		} catch (Exception e) {
+			output = "Error while updating the bill."; 
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+
     // deleting bill
     public String deleteBill(String billID) {
         String output = "";
