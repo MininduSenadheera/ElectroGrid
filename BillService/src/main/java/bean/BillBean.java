@@ -1,5 +1,8 @@
 package bean;
 
+// for JSON
+import com.google.gson.*;
+
 public class BillBean {
     private int billID;
     private int connectionID;
@@ -91,4 +94,17 @@ public class BillBean {
         setAmount(total);
     }
 
+    public void convertStringToJSONInsert(String billData) {
+		//convert string to JSON object and assign to variables in the class
+		JsonObject billObject  = new JsonParser().parse(billData).getAsJsonObject(); 		
+		setConnectionID(billObject.get("connectionID").getAsInt());
+		setUnits(billObject.get("units").getAsInt());
+	}
+
+    public void convertStringToJSONUpdate(String billData) {
+		//convert string to JSON object and assign to variables in the class
+		JsonObject billObject  = new JsonParser().parse(billData).getAsJsonObject();
+        setConnectionID(billObject.get("billID").getAsInt());
+        setPaymentID(billObject.get("paymentID").getAsInt());
+	}
 }
