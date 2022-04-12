@@ -60,7 +60,10 @@ public class BillService {
 	@Path("/{billID}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteBill(@PathParam("billID") String billID) {
-		String output = billObject.deleteBill(billID);
+		BillBean billBean = new BillBean();
+		billBean.setBillID(Integer.parseInt(billID));
+		
+		String output = billObject.deleteBill(billBean);
 		return output;
 	}
 }
