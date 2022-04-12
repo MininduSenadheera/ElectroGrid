@@ -6,6 +6,7 @@ import model.Bill;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import bean.BillBean;
 @Path("Bill")
 public class BillService {
     Bill billObject = new Bill();
@@ -25,6 +26,19 @@ public class BillService {
 	@Produces(MediaType.TEXT_HTML)
 	public String readCustomerBills(@PathParam("customerID") String customerID) {
 		String output = billObject.readCustomerBills(customerID);
+		return output;
+	}
+    
+	// insert new bill
+    @POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String newBill(String billData) {
+		BillBean billBean = new BillBean();
+		billBean.convertStringToJSONInsert(billData);
+
+		String output = billObject.newBill(billBean);
 		return output;
 	}
 	// delete bill
