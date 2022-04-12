@@ -41,6 +41,8 @@ public class Bill {
             while (resultSet.next()) {
                 billBean.setBillID(resultSet.getInt("billID"));
                 billBean.setConnectionID(resultSet.getInt("connectionID"));
+                billBean.setCustomerID(resultSet.getInt("customerID"));
+                billBean.setCustomerName(resultSet.getString("firstname") + " " + resultSet.getString("lastname"));
                 billBean.setPaymentID(resultSet.getInt("paymentID"));
                 billBean.setIssuedDate(resultSet.getString("issueDate"));
                 billBean.setDueDate(resultSet.getString("dueDate"));
@@ -107,10 +109,13 @@ public class Bill {
             while (resultSet.next()) {
                 billBean.setBillID(resultSet.getInt("billID"));
                 billBean.setConnectionID(resultSet.getInt("connectionID"));
+                billBean.setCustomerID(resultSet.getInt("customerID"));
+                billBean.setCustomerName(resultSet.getString("firstname") + " " + resultSet.getString("lastname"));
                 billBean.setPaymentID(resultSet.getInt("paymentID"));
-                billBean.setIssuedDate(resultSet.getString("issuedDate"));
+                billBean.setIssuedDate(resultSet.getString("issueDate"));
                 billBean.setDueDate(resultSet.getString("dueDate"));
                 billBean.setStatus(resultSet.getString("status"));
+                billBean.setUnits(resultSet.getInt("units"));
                 billBean.setAmount(resultSet.getDouble("amount"));
 
                 // add the data to the html table
