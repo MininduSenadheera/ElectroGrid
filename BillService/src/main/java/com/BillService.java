@@ -41,6 +41,20 @@ public class BillService {
 		String output = billObject.newBill(billBean);
 		return output;
 	}
+
+	// update bill
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateBill(String billData) {
+		BillBean billBean = new BillBean();
+		billBean.convertStringToJSONUpdate(billData);
+		
+		String output = billObject.updateBill(billBean);
+		return output;
+	}
+
 	// delete bill
 	@DELETE
 	@Path("/{billID}")
