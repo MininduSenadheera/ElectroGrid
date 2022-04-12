@@ -72,4 +72,23 @@ public class BillBean {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    public void calculateAmount(int units) {
+        double total = 0;
+
+        if (units <= 60) {
+            total = units * 7.85;
+        } else if (units <= 90) {
+            total = (64 * 7.85) + ((units-64) * 10) + 90.00;
+        } else if (units <= 120) {
+            total = (64 * 7.85) + (32 * 10.00) + ((units-96) * 27.75) + 480.00;
+        } else if (units <= 180) {
+            total = (64 * 7.85) + (32 * 10.00) + (32 * 27.75) + ((units-128) * 32.00) + 480.00;
+        } else {
+            total = (64 * 7.85) + (32 * 10.00) + (32 * 27.75) + (64 * 32.00) + ((units-192) * 45.00) + 540.00;
+        }
+
+        setAmount(total);
+    }
+
 }
