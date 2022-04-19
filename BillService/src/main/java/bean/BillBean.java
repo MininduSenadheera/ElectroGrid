@@ -94,6 +94,12 @@ public class BillBean {
         setAmount(total);
     }
 
+    public String convertObjectToJsonString(BillBean billBean) {
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(billBean);
+        return jsonString;
+    }
+
     public void convertStringToJSONInsert(String billData) {
 		//convert string to JSON object and assign to variables in the class
 		JsonObject billObject  = new JsonParser().parse(billData).getAsJsonObject(); 		
