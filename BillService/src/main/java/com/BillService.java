@@ -68,12 +68,12 @@ public class BillService {
 	// delete bill
 	@DELETE
 	@Path("/{billID}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteBill(@PathParam("billID") String billID) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteBill(@PathParam("billID") String billID) {
 		BillBean billBean = new BillBean();
 		billBean.setBillID(Integer.parseInt(billID));
 		
-		String output = billObject.deleteBill(billBean);
-		return output;
+		Response response = billObject.deleteBill(billBean);
+		return response;
 	}
 }
