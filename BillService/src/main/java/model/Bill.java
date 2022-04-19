@@ -230,29 +230,34 @@ public class Bill {
 	}
 
     // deleting bill
-    public String deleteBill(String billID) {
-        String output = "";
+    public Response deleteBill(BillBean billBean) {
 
         try {
             Connection connection = DBConnection.connect();
 
             if (connection == null) {
-                return "Error while connecting database for deleting bill";
+                return Response.status(Status.INTERNAL_SERVER_ERROR)
+                                .entity("Error while connecting database for deleting bill")
+                                .build();
             }
 
-            String sql = "DELETE FROM Bill WHERE billID = ? ";
+            // delete bill
+            String sql2 = "DELETE FROM Bill WHERE billID = ? ";
+            PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
+            preparedStatement2.setInt(1, billBean.getBillID());
+            int status = preparedStatement2.executeUpdate(); 
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, Integer.parseInt(billID));
-            preparedStatement.execute();
+            connection.close(); 
 
-            connection.close();
-
-            output = "Bill deleted successfully";
+            if(status > 0) {
+                return Response.status(Status.OK).entity("Bill deleted successfully").build();
+            } else {
+                return Response.status(Status.NOT_FOUND).entity("No bills found with the corresponding ID").build();
+            }
+            
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            output = "Error while deleting bill";
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
-        return output;
     }
 }
