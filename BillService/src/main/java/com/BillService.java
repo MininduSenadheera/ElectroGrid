@@ -1,16 +1,26 @@
 package com;
 
-import model.Bill;
-
 // for REST service
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import bean.BillBean;
+import model.Bill;
+
 @Path("Bill")
 public class BillService {
     Bill billObject = new Bill();
 
+	// get bill by ID
+	@GET
+	@Path("/{billID}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response readBill(@PathParam("billID") String billID) {
+		Response response = billObject.readBill(billID);
+		return response;
+	}
+   
 	// get bills by connection ID
 	@GET
 	@Path("/connection/{connectionID}")
