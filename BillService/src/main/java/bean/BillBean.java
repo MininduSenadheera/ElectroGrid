@@ -104,7 +104,7 @@ public class BillBean {
     public void convertStringToJSONUpdate(String billData) {
 		//convert string to JSON object and assign to variables in the class
 		JsonObject billObject  = new JsonParser().parse(billData).getAsJsonObject();
-        setConnectionID(billObject.get("billID").getAsInt());
+        setBillID(billObject.get("billID").getAsInt());
         setPaymentID(billObject.get("paymentID").getAsInt());
 	}
 }
