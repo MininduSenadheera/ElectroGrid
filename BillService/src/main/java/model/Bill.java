@@ -223,7 +223,10 @@ public class Bill {
                 return Response.status(Status.NOT_FOUND).entity("No bills found with the corresponding ID").build();
             }
 			
-		} catch (Exception e) {
+		} catch (SQLException se) {
+            System.err.println(se.getMessage());
+            return Response.status(Status.NOT_MODIFIED).entity(se.getMessage()).build(); 
+        } catch (Exception e) {
 			System.err.println(e.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build(); 
 		}
