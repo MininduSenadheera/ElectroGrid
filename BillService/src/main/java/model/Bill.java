@@ -2,9 +2,62 @@ package model;
 
 import java.sql.*;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import bean.BillBean;
 import util.DBConnection;
+
 public class Bill {
+
+    // read bills by bill ID
+    public Response readBill(String billID) {
+        BillBean billBean = new BillBean();
+        billBean.setBillID(Integer.parseInt(billID));
+
+        try {
+            Connection connection = DBConnection.connect();
+
+            if (connection == null) {
+                return Response.status(Status.INTERNAL_SERVER_ERROR)
+                                .entity("Error while connecting database for reading bill")
+                                .build();
+            }
+
+            // sql statement to retrieve bill
+            String sql =    "SELECT * " +
+                            "FROM Bill B, Connection C, Customer U " + 
+                            "WHERE B.connectionID = C.connectionID and C.customerID = U.customerID and B.billID = ?";
+
+            // binding connectionID and executing the query
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, billBean.getBillID());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                billBean.setBillID(resultSet.getInt("billID"));
+                billBean.setConnectionID(resultSet.getInt("connectionID"));
+                billBean.setCustomerID(resultSet.getInt("customerID"));
+                billBean.setCustomerName(resultSet.getString("firstname") + " " + resultSet.getString("lastname"));
+                billBean.setPaymentID(resultSet.getInt("paymentID"));
+                billBean.setIssuedDate(resultSet.getString("issueDate"));
+                billBean.setDueDate(resultSet.getString("dueDate"));
+                billBean.setStatus(resultSet.getString("status"));
+                billBean.setUnits(resultSet.getInt("units"));
+                billBean.setAmount(resultSet.getDouble("amount"));
+            } else {
+            	return Response.status(Status.NOT_FOUND).entity("No bills found with the corresponding ID").build();
+            }
+            
+            
+            connection.close();
+
+            return Response.status(Status.OK).entity(billBean.convertObjectToJsonString(billBean)).build();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
 
     // read bills by connection ID
     public String readConnectionBills(String connectionID) {
