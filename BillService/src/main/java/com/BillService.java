@@ -56,13 +56,13 @@ public class BillService {
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String updateBill(String billData) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateBill(String billData) {
 		BillBean billBean = new BillBean();
 		billBean.convertStringToJSONUpdate(billData);
 		
-		String output = billObject.updateBill(billBean);
-		return output;
+		Response response = billObject.updateBill(billBean);
+		return response;
 	}
 
 	// delete bill
