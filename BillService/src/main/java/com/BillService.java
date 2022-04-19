@@ -43,13 +43,13 @@ public class BillService {
     @POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String newBill(String billData) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response newBill(String billData) {
 		BillBean billBean = new BillBean();
 		billBean.convertStringToJSONInsert(billData);
 
-		String output = billObject.newBill(billBean);
-		return output;
+		Response response = billObject.newBill(billBean);
+		return response;
 	}
 
 	// update bill
