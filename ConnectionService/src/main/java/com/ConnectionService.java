@@ -61,4 +61,17 @@ public class ConnectionService {
 
 
 
+    //delete bill
+    @DELETE
+	@Path("/{connectionID}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteConnection(@PathParam("connectionID") String connectionID) {
+		ConnectionBean connectionBean = new ConnectionBean();
+		connectionBean.setConnectionID(Integer.parseInt(connectionID));
+		
+		String output = connectionObject.deleteConnection(connectionBean);
+		return output;
+	}
+
+    
 }
