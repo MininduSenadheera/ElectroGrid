@@ -117,3 +117,34 @@ public class ConnectionModel {
 		return output;
 			
 	}
+
+	public String updateConnectionStatus(ConnectionBean connectionBean){
+
+		String output = "";
+
+		try {
+			Connection connection =DBConnection.connect();
+
+			if(connection==null){
+				return "Error while connecting to database";
+			}
+
+		String sql = "UPDATE Connection SET  status = ?  WHERE connectionID=?";
+
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, connectionBean.getStatus());
+        
+			preparedStatement.setInt(2, connectionBean.getConnectionID());
+            preparedStatement.execute();
+
+			connection.close();
+
+			output = "Status updated successfully";
+		} catch (Exception e){
+			output = "Error while updating the connection.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+			
+	}
