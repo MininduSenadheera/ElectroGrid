@@ -178,3 +178,35 @@ public class ConnectionModel {
 	}
 
 	public String newConnection(ConnectionBean connectionBean) {
+
+		String output ="";
+
+	try {
+
+		Connection connection = DBConnection.connect();
+
+		if(connection==null){
+			return "Error while connecting to the database";
+		}
+
+		String sql = "INSERT INTO Connection (`customerID`,`status`,`type`,`units`)" + " VALUES(?,?,?,?)";
+
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setInt(1,connectionBean.getCustomerID());
+		preparedStatement.setString(2, connectionBean.getStatus());
+		preparedStatement.setString(3,connectionBean.getConnectionType());
+		preparedStatement.setInt(4, connectionBean.getUnits());
+
+		preparedStatement.execute();
+		connection.close();
+
+		output = "Connection Record Inserted Successfully";
+	} catch(Exception e){
+		System.err.println(e.getMessage());
+		output = "Error while inserting the connection";
+
+	}
+
+		return output;
+	}
+
