@@ -210,3 +210,41 @@ public class ConnectionModel {
 		return output;
 	}
 
+	public String readUnits(String connectionID){
+		String output = "";
+
+		try {
+			Connection connection = DBConnection.connect();
+			
+			if (connection == null) {
+				return "Error while connecting database for get units";
+			}
+			
+			String sql = "SELECT units " +
+				"FROM Connection " + "WHERE connectionID=?";
+				
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,Integer.parseInt(connectionID));
+			ResultSet resultSet = preparedStatement.executeQuery();	
+
+			ConnectionBean connectionBean = new ConnectionBean();
+
+			while (resultSet.next()) {
+				connectionBean.setUnits(resultSet.getInt("units")); 
+				
+			}
+
+			output += "<p>" + connectionBean.getUnits() + "</p>";
+
+		connection.close();
+
+	} catch (Exception e){
+		System.err.println(e.getMessage());
+		output = "Error while viewing the units";
+	}
+	return output;
+
+	}
+
+	
+}
