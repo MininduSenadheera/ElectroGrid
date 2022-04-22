@@ -5,6 +5,11 @@ import java.sql.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.Request;
+
 import bean.BillBean;
 import util.DBConnection;
 
@@ -263,4 +268,23 @@ public class Bill {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
+
+    // this method call update units method in connection service
+	public String GetMonthlyUnitsFromConnectionService(BillBean billBean) {
+		try {
+			MediaType JSONType = MediaType.get("application/json; charset=utf-8");
+			OkHttpClient client = new OkHttpClient();
+			RequestBody body = RequestBody.create("{ 'connectionID':'" + billBean.getConnectionID() + "' , 'units':'" + billBean.getUnits() + "'}", JSONType);
+			Request request = new Request.Builder().url("http://localhost:8080/ConnectionService/connection/units").put(body).build();
+
+			try (okhttp3.Response response = client.newCall(request).execute()) {
+			 	return response.body().string();
+			}
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+            return "Error while retrieving monthly units";
+		}
+	}
+
 }
