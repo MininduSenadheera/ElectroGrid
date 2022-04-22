@@ -148,3 +148,33 @@ public class ConnectionModel {
 		return output;
 			
 	}
+
+	//deleting the connection record
+	public String deleteConnection(ConnectionBean connectionBean){
+		String output = "";
+
+		try {
+			Connection connection = DBConnection.connect();
+
+			if (connection == null){
+				return "Error while connecting database for deleting the connection record";
+			}
+			
+			String sql = "DELETE FROM Connection WHERE connectionID=?";
+
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setInt(1,connectionBean.getConnectionID());
+			preparedStatement.execute();
+
+			connection.close();
+
+			output = "Connection record deleted successfully";
+		} catch(Exception e){
+			System.err.println(e.getMessage());
+			output = "Error while deleting connection record";
+		}
+
+		return output;
+	}
+
+	public String newConnection(ConnectionBean connectionBean) {
