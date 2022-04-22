@@ -54,7 +54,6 @@ public class ConnectionModel {
 				output += "<td>" + connectionBean.getConnectionType() + "</td>";
 				output += "<td>" + connectionBean.getUnits() + "</td>";
 
-
 			}
 
 			connection.close();
@@ -68,8 +67,7 @@ public class ConnectionModel {
 		return output;
 		
 	}
-	
-	
+		
 	//updating connection 
 
 	public String updateConnectionUnits(ConnectionBean connectionBean){
@@ -178,7 +176,7 @@ public class ConnectionModel {
 	}
 
 	public String newConnection(ConnectionBean connectionBean) {
-
+		
 		String output ="";
 
 	try {
@@ -244,7 +242,5 @@ public class ConnectionModel {
 	}
 	return output;
 
-	}
-
-	
+	}	
 }
