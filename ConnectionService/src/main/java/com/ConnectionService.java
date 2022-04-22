@@ -20,4 +20,17 @@ public class ConnectionService {
         return output;
     }
 
+    //insert a new Connection
+    @POST
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String newConnection (String connectionData){
+        ConnectionBean connectionBean = new ConnectionBean();
+        connectionBean.convertStringToJSONInsert(connectionData);
+
+        String output = connectionObject.newConnection(connectionBean);
+        return output;
+    }
+
 }
