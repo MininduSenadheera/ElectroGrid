@@ -81,4 +81,12 @@ public class ConnectionBean {
 	   	// setUnits(connectionObject.get("units").getAsInt());
 	}
 
+	public void convertStringToJSONUnits(String connectionData){
+		//convert String to JSON object and assign to variables in the class
+		JsonObject connectionObject  = new JsonParser().parse(connectionData).getAsJsonObject();
+
+		setUnits(connectionObject.get("units").getAsInt());
+		setConnectionID(connectionObject.get("connectionID").getAsInt());
+		
+	}	
 }
