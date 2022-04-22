@@ -249,6 +249,21 @@ public class Bill {
                                 .build();
             }
 
+            // get payment related to bill
+            String sql1 = "SELECT paymentID FROM Bill WHERE billID = ?";
+            PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
+            preparedStatement1.setInt(1, billBean.getBillID());
+            ResultSet resultSet = preparedStatement1.executeQuery();
+
+            // call payment delete only if a payment is related to bill
+            if(resultSet.next()) {
+                billBean.setPaymentID(resultSet.getInt("paymentID"));
+
+                if (billBean.getPaymentID() != 0) {
+                    GetDeleteServiceFromPayment(billBean);
+                }
+            }
+
             // delete bill
             String sql2 = "DELETE FROM Bill WHERE billID = ? ";
             PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
