@@ -33,4 +33,17 @@ public class ConnectionService {
         return output;
     }
 
+    //update connection units
+    @PUT
+    @Path("/Units")
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateConnectionUnits(String connectionData){
+        ConnectionBean connectionBean = new ConnectionBean();
+        connectionBean.convertStringToJSONUpdateUnits(connectionData);
+
+        String output = connectionObject.updateConnectionUnits(connectionBean);
+        return output;
+    }
+
 }
