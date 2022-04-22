@@ -1,5 +1,9 @@
 package bean;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+
 public class ConnectionBean {
 	private int connectionID;
 	private String status;
@@ -52,4 +56,13 @@ public class ConnectionBean {
 		this.lastName = lastName;
 	}
 
+	public void convertStringToJSONInsert(String connectionData) {
+		//convert string to JSON object and assign to variables in the class
+		JsonObject connectionObject = new JsonParser().parse(connectionData).getAsJsonObject();
+		setCustomerID(connectionObject.get("customerID").getAsInt());
+		setStatus(connectionObject.get("status").getAsString());
+		setUnits(connectionObject.get("units").getAsInt());
+		setConnectionType(connectionObject.get("connectionType").getAsString());
+	}
+	
 }
