@@ -1,7 +1,7 @@
 # ElectroGrid
 
-## Batch:- Y3S1.04(DS)
-## Group No:- 155
+Batch:- Y3S1.04(DS)
+Group No:- 155
 
 ## Contributors
 Minindu Senadheera - IT20125998
