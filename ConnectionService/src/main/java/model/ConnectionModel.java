@@ -70,3 +70,50 @@ public class ConnectionModel {
 	}
 	
 	
+	//updating connection 
+
+	public String updateConnectionUnits(ConnectionBean connectionBean){
+
+		String output = "";
+
+		try {
+			Connection connection =DBConnection.connect();
+
+			if(connection==null){
+				return "Error while connecting to database";
+			}
+
+			String query = "SELECT units FROM Connection WHERE connectionID=?";
+
+			PreparedStatement preparedStmt = connection.prepareStatement(query);
+			preparedStmt.setInt(1, connectionBean.getConnectionID());
+            ResultSet resultSet = preparedStmt.executeQuery();
+
+			int oldUnits=0;
+
+			if(resultSet.next()){
+				oldUnits = resultSet.getInt("units");
+				
+			}
+
+			int monthlyUnits = connectionBean.getUnits() - oldUnits;
+
+			String sql = "UPDATE Connection SET  units = ?  WHERE connectionID=?";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+            preparedStatement.setInt(1, connectionBean.getUnits());
+			preparedStatement.setInt(2, connectionBean.getConnectionID());
+            preparedStatement.executeUpdate();
+
+			connection.close();
+
+			output = Integer.toString(monthlyUnits);
+		} catch (Exception e){
+			output = "Error while updating the connection.";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+			
+	}
