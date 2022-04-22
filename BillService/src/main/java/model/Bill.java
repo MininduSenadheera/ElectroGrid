@@ -200,6 +200,43 @@ public class Bill {
         return output;
     }
 
+    // issuing a new bill
+    public Response newBill(BillBean billBean) {
+
+        try {
+            Connection connection = DBConnection.connect();
+
+            if (connection == null) {
+                return Response.status(Status.INTERNAL_SERVER_ERROR)
+                                .entity("Error while connecting database for inserting bill")
+                                .build();
+            }
+
+            // get units difference
+            String d_units = GetMonthlyUnitsFromConnectionService(billBean);
+            int diff_units = Integer.parseInt(d_units);
+            billBean.calculateAmount(diff_units);
+
+            String sql =    " INSERT INTO Bill (`connectionID`,`issueDate`,`dueDate`,`units`,`amount`,`status`)" + 
+                            " values (?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY), ?, ?, ?)";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, billBean.getConnectionID());
+			preparedStatement.setInt(2, diff_units);
+            preparedStatement.setDouble(3, billBean.getAmount());
+            preparedStatement.setString(4, "Pending");
+            preparedStatement.execute();
+
+            connection.close();
+            
+            return Response.status(Status.CREATED).entity("Bill issued successfully").build();
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
+
     // updating bill
     public Response updateBill(BillBean billBean) {
 
