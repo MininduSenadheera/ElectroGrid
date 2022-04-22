@@ -46,4 +46,19 @@ public class ConnectionService {
         return output;
     }
 
+    //update connection status
+    @PUT
+    @Path("/Status")
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+    public String updateConnectionStatus(String connectionData){
+        ConnectionBean connectionBean = new ConnectionBean();
+        connectionBean.convertStringToJSONUpdateStatus(connectionData);
+
+        String output = connectionObject.updateConnectionStatus(connectionBean);
+        return output;
+    }
+
+
+
 }
