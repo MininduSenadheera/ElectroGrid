@@ -287,4 +287,21 @@ public class Bill {
 		}
 	}
 
+    //this method call delete method in payment service
+	public String GetDeleteServiceFromPayment(BillBean billBean) {
+		try {
+			MediaType JSONType = MediaType.get("application/json; charset=utf-8");
+			OkHttpClient client = new OkHttpClient();
+			RequestBody body = RequestBody.create("{ 'PaymentID':'" + billBean.getPaymentID() + "'}", JSONType);
+			Request request = new Request.Builder().url("http://localhost:8080/PaymentService/payment/deletebill").delete(body).build();
+
+			try (okhttp3.Response response = client.newCall(request).execute()) {
+			 	return response.body().string();
+			}
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+            return "Error while deleting payment related to bill";
+		}
+	}
 }
