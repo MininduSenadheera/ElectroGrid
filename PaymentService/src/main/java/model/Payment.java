@@ -42,6 +42,19 @@ public class Payment {
 	                	payBean.setPaymentID(gk);
 	                    
 	                }
+	                
+	        //updating the bill with the inserted payment ID   
+	           GetUpdateServicefromBill(payBean);
+	           
+	            connection.close();
+	            
+	            return ("Payment inseted successfully");
+
+	        } catch (Exception e) {
+	            System.err.println(e.getMessage());
+	            return (e.getMessage());
+	        }
+	    }
 	//read all payment details
 		 public String readPaymentDetails() {
 			
