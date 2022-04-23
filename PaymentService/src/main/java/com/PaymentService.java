@@ -20,5 +20,18 @@ public class PaymentService {
 			return payObject.readPaymentDetails();
 		}
 		
+	// insert  Payment
+		 @POST
+			@Path("/")
+			@Consumes(MediaType.APPLICATION_JSON)
+			@Produces(MediaType.APPLICATION_JSON)
+			public String newPill(String paymentData) {
+				PaymentBean payBean = new PaymentBean();
+				payBean.convertStringToJSONInsert(paymentData);
+
+				String response =payObject.newPayment(payBean);
+				return response;
+			}
+		
 
 }
