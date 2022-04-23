@@ -171,5 +171,36 @@ public class Payment {
 	        return output;
         
     }   
+	 	
+     // updating Payment
+        public String updatePayment(PaymentBean payBean) {
+    		String output = ""; 
+
+    		try {
+    			Connection connection = DBConnection.connect(); 
+    			
+    			if (connection == null) {
+    				return "Error while connecting to the database for updating payment."; 
+    			}
+
+                String sql = " UPDATE payment SET  amount = ?,paymentDateTime = CURRENT_TIMESTAMP(),type = ? WHERE paymentID = ?";
+                
+             // create a prepared statement
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(3, payBean.getPaymentID());
+                preparedStatement.setFloat(1,(float) payBean.getAmount());
+	            preparedStatement.setString(2, payBean.getType());
+             // execute the statement   
+                preparedStatement.execute();
+                connection.close();
+    			
+    			output = "Payment updated successfully"; 
+    			
+    		} catch (Exception e) {
+    			output = "Error while updating the payment."; 
+    			System.err.println(e.getMessage());
+    		}
+    		return output;
+    	}
 
 }
