@@ -55,6 +55,29 @@ public class Payment {
 	            return (e.getMessage());
 	        }
 	    }
+	
+	
+	 //updating the bill with the inserted payment ID 
+		private String GetUpdateServicefromBill(PaymentBean payBean) {
+			 
+			 try {
+					MediaType JSONType = MediaType.get("application/json; charset=utf-8");
+					OkHttpClient client = new OkHttpClient();
+					RequestBody body = RequestBody.create("{ 'billID':'" + payBean.getBillID() + "','paymentID':'"+ payBean.getPaymentID() + "'}", JSONType);
+					Request request = new Request.Builder().url("http://localhost:8080/BillService/bill/").put(body).build();
+	
+					try (okhttp3.Response response = client.newCall(request).execute()) {
+					 	return response.body().string();
+					}
+	
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+		            return "Error while inserting payment related to bill";
+				}
+		 
+		
+	}
+
 	//read all payment details
 		 public String readPaymentDetails() {
 			
