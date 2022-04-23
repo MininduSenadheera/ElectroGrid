@@ -99,5 +99,64 @@ public class Payment {
 		}
 	 
 	 
+	// read Payments by customer ID
+	 	public String readCustomerPayments(String customerID) {
+	 		String output = "";
+            
+	        try {
+	            Connection connection = DBConnection.connect();
+	
+	            if (connection == null) {
+	                return "Error while connecting database for reading payments by customer ID";
+	            }
+	
+	            // Prepare the html table to be displayed
+	            output = "<table border=\"1\">" 
+	                        + "<tr>"
+	                            + "<th>Payment ID</th>"  + "<th>Customer ID</th>"
+	                             + "<th>Payment Date/Time</th>" 
+	                             + "<th>Amount</th>" + "<th>Type</th>"
+	                        + "</tr>";
+	
+	            // sql statement to retrieve payments by customer ID
+	            String sql =    "SELECT * " +
+	                            "FROM payment  " + 
+	                            "WHERE customerID = ?";
+	
+	            // binding customerID and executing the query
+	            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+	            preparedStatement.setInt(1, Integer.parseInt(customerID));
+	            ResultSet resultSet = preparedStatement.executeQuery();
+	
+	            PaymentBean PayBean = new PaymentBean();
+	
+	            // looping through the rows
+	            while (resultSet.next()) {
+	            	PayBean.setPaymentID(resultSet.getInt("paymentID"));
+	            	PayBean.setCustomerID(resultSet.getInt("customerID"));
+	            	PayBean.setPaymentDateTime(resultSet.getTimestamp("paymentDateTime"));
+	            	PayBean.setAmount(resultSet.getFloat("amount"));
+	            	PayBean.setType(resultSet.getString("type"));
+	            	
+	                // add the data to the html table
+	                output += "<tr><td>" + PayBean.getPaymentID() + "</td>";
+	                output += "<td>" + PayBean.getCustomerID() + "</td>";
+	                output += "<td>" + PayBean.getPaymentDateTime() + "</td>";
+	                output += "<td>" + PayBean.getAmount() + "</td>";
+	                output += "<td>" + PayBean.getType() + "</td></tr>";
+	            }
+	            
+	            connection.close();
+	
+	            output += "</table>";
+	            
+	        } catch (Exception e) {
+	            System.err.println(e.getMessage());
+	            output = "Error while reading payments by customer ID";
+	        }
+	
+	        return output;
+        
+    }   
 
 }
