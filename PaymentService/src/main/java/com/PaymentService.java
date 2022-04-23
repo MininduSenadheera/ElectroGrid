@@ -55,5 +55,16 @@ public class PaymentService {
 			return output;
 		}
 		
+	// delete payment
+		@DELETE
+		@Path("/{paymentID}")
+		@Produces(MediaType.TEXT_PLAIN)
+		public String deletePayment(@PathParam("paymentID") String paymentID) {
+			PaymentBean payBean = new PaymentBean();
+			payBean.setPaymentID(Integer.parseInt(paymentID));
+			
+			String output = payObject.deletePayment(payBean);
+			return output;
+		}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 
 }
