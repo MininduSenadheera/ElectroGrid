@@ -65,6 +65,19 @@ public class BillService {
 		return response;
 	}
 
+	// update bill from delete payment
+	@PUT
+	@Path("/payment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateDeletePayment(String billData) {
+		BillBean billBean = new BillBean();
+		billBean.convertStringToJSONUpdateDeletePayment(billData);
+		
+		Response response = billObject.updateDeletePayment(billBean);
+		return response;
+	}
+
 	// delete bill
 	@DELETE
 	@Path("/{billID}")
