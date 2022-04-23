@@ -202,5 +202,53 @@ public class Payment {
     		}
     		return output;
     	}
+        
+    //Method to delete a  payment details record
+    	public String deletePayment(PaymentBean payBean){
+    			
+    		String output = "";
+    			
+    		try	{
+    				
+    			Connection connection = DBConnection.connect();
+    				
+    			if (connection == null)				
+    				return "Error while connecting to the database for deleting.";
+    				
+    			// Creating a prepared statement
+    			String query = "DELETE FROM payment WHERE paymentID = ? ";
+    		
+    			PreparedStatement preparedStmt = connection.prepareStatement(query);
+    			// Binding values
+    			preparedStmt.setInt(1, payBean.getPaymentID());
+    			// execute the statement
+    			preparedStmt.execute();
+    			
+    			
+    			String query2 = "SELECT billID FROM Bill WHERE paymentID = ?";
+    			
+    			PreparedStatement preparedStmt1 = connection.prepareStatement(query2);
+    			// Binding values
+    			preparedStmt1.setInt(1, payBean.getPaymentID());
+    			// execute the statement
+    			ResultSet resultSet = preparedStmt1.executeQuery();
+
+                
+                if(resultSet.next()) {
+                    int billID = resultSet.getInt("billID");
+
+                    GetUpdateServicefromBill(billID);
+                }
+                
+                connection.close();
+    			output = " Payment record deleted successfully";
+    		}
+    		catch (Exception e)
+    		{
+    			output = "Error while deleting a  payment record.";
+    			System.err.println(e.getMessage());
+    		}
+    		return output;
+    	}
 
 }
