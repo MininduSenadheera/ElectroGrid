@@ -63,4 +63,12 @@ public class PaymentBean {
 	        return jsonString;
 	    }
 
+	  public void convertStringToJSONInsert(String paymentData) {
+			//convert string to JSON object and assign to variables in the class
+			JsonObject payObject  = new JsonParser().parse(paymentData).getAsJsonObject(); 		
+			setCustomerID(payObject.get("customerID").getAsInt());
+			setAmount(payObject.get("amount").getAsFloat());
+			setType(payObject.get("type").getAsString());
+			setBillID(payObject.get("billID").getAsInt());
+		}
 }
