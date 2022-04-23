@@ -2,6 +2,10 @@ package bean;
 
 import java.sql.Timestamp;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 public class PaymentBean {
 	
 	private int paymentID;
@@ -52,4 +56,11 @@ public class PaymentBean {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	 public String convertObjectToJsonString(PaymentBean payBean) {
+	        Gson gson = new Gson();
+	        String jsonString = gson.toJson(payBean);
+	        return jsonString;
+	    }
+
 }
