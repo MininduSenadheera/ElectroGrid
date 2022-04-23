@@ -251,4 +251,26 @@ public class Payment {
     		return output;
     	}
 
+
+
+    //Update bill while deleting payments
+		private String GetUpdateServicefromBill(int billID) {
+			// TODO Auto-generated method stub
+			try {
+				MediaType JSONType = MediaType.get("application/json; charset=utf-8");
+				OkHttpClient client = new OkHttpClient();
+				RequestBody body = RequestBody.create("{ 'billID':'" + billID + "'}", JSONType);
+				Request request = new Request.Builder().url("http://localhost:8080/BillService/payment/").put(body).build();
+
+				try (okhttp3.Response response = client.newCall(request).execute()) {
+				 	return response.body().string();
+				}
+
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+	            return "Error while updating bill related to payment";
+			}
+			
+		}	
+
 }
