@@ -42,5 +42,18 @@ public class PaymentService {
 			return output;
 		}
 		
+	// update payment
+		@PUT
+		@Path("/")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.TEXT_PLAIN)
+		public String updatePayment(String paymentData) {
+			PaymentBean payBean = new PaymentBean();
+			payBean.convertStringToJSONUpdate(paymentData);
+			
+			String output = payObject.updatePayment(payBean);
+			return output;
+		}
+		
 
 }
