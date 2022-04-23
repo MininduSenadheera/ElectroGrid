@@ -33,5 +33,14 @@ public class PaymentService {
 				return response;
 			}
 		
+	// get Payments by customer ID
+		@GET
+		@Path("/customer/{customerID}")
+		@Produces(MediaType.TEXT_HTML)
+		public String readCustomerpayments(@PathParam("customerID") String customerID) {
+			String output = payObject.readCustomerPayments(customerID);
+			return output;
+		}
+		
 
 }
