@@ -42,5 +42,62 @@ public class Payment {
 	                	payBean.setPaymentID(gk);
 	                    
 	                }
+	//read all payment details
+		 public String readPaymentDetails() {
+			
+			String output = "";
+						
+			try {
+						
+				Connection con = DBConnection.connect();
+							
+				if(con == null) 
+					return "Error while connecting to the database for reading.";
+							
+				//Preparing the HTML table, which is to be displayed
+				output = "<table border = '1'>"
+						+ "<tr><th>Payment ID </th>"
+						+ "<th>Customer ID</th>"
+						+ "<th>payment Date/Time</th>"
+						+ "<th>Amount</th>"
+						+ "<th>Type</th><tr>";
+					
+				String query = "SELECT * FROM payment";
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(query);
+							
+				//Iterate through the rows in the result set
+				while(rs.next()) {
+					Integer paymentID = rs.getInt("paymentID");	
+					Integer customerID = rs.getInt("customerID");
+					Timestamp paymentDateTime = rs.getTimestamp("paymentDateTime");
+					float amount = rs.getFloat("amount");
+					String type = rs.getString("type");
+					
+								
+					// Add into the HTML table
+					output += "<tr><td>" + paymentID + "</td>";
+					output += "<td>" + customerID + "</td>";
+					output += "<td>" + paymentDateTime + "</td>";
+					output += "<td>" + amount + "</td>";
+					output += "<td>" + type + "</td>";
+					
+				}	
+								
+			con.close();
+							
+			//Completing the HTML table
+			output += "</table>";					
+							
+			} catch (SQLException e) {
+							
+				output += "Error while reading the payment details.";
+				System.err.println(e.getMessage());
+			}		
+						
+			return output ;		
+		}
+	 
+	 
 
 }
