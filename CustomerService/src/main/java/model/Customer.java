@@ -203,7 +203,12 @@ public class Customer {
 		    PreparedStatement preparedStmt = connection.prepareStatement(query);
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-			
+			preparedStatement.setInt(1, customerBean.getCustomerId());
+			preparedStmt.setString(2, customerBean.getFirstName());
+		    preparedStmt.setString(3, customerBean.getLastName());
+		    preparedStmt.setString(4, customerBean.getNic());
+		    preparedStmt.setInt(5, customerBean.getPhoneNumber());
+		    preparedStmt.setString(6, customerBean.getAddress());
 
             preparedStatement.execute();
 
