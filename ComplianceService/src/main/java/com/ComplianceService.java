@@ -21,4 +21,17 @@ public class ComplianceService {
 			return output;
 		}
 
+		// update complain
+		@PUT
+		@Path("/")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.TEXT_PLAIN)
+		public String updateComplain(String complainData ) {
+			ComplianceBean complianceBean = new ComplianceBean();
+		    complianceBean.convertStringToJSONUpdate(complainData);
+		    
+		    String output = complainObject.updateComplain(complianceBean);
+		    return output;
+		}
+		
 }
