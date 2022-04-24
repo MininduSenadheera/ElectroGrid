@@ -101,6 +101,13 @@ public class Customer {
   				
   				
   			
+  				// Add into the html table
+  				output += "<tr><td>" + firstName + "</td>";
+  				output += "<td>" + lastName + "</td>";
+  				output += "<td>" + nic + "</td>";
+  				output += "<td>" + phone + "</td>";
+  				output += "<td>" + email + "</td>";
+  				output += "<td>" + address + "</td>";
   				
   				
   				// buttons
