@@ -146,7 +146,10 @@ public class Customer {
 	 preparedStmt.setString(3, lastName);
 	 preparedStmt.setString(4, nic);
 	 preparedStmt.setInt(5, phoneNumber);
-	 
+	 preparedStmt.setString(6, email);
+//	 preparedStmt.setDouble(4, Double.parseDouble(price));
+	 preparedStmt.setString(7, address);
+	 // execute the statement
 	 
 	 preparedStmt.execute();
 	 connection.close();
