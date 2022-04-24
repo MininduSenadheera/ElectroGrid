@@ -197,12 +197,7 @@ public class Customer {
 			// create a prepared statement
 			String query = "delete from items where customerId=?";
 			PreparedStatement preparedStmt = connection.prepareStatement(query);
-			// binding values
-			preparedStmt.setInt(1, customerId);
-			// execute the statement
-			preparedStmt.execute();
-			connection.close();
-			output = "Deleted successfully";
+			
 		} catch (Exception e) {
 			output = "Error while deleting the item.";
 			System.err.println(e.getMessage());
