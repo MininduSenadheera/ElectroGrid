@@ -6,7 +6,7 @@ import java.sql.*;
 //For JSON
 import com.google.gson.*;
 
-//import bean.CustomerBean;
+
 import util.DBConnection;
 
 public class Customer {
