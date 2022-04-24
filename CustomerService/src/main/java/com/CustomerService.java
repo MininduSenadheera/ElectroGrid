@@ -80,7 +80,24 @@ public class CustomerService {
 		String output = customerObject.insertCustomer( firstName, lastName, nic, phoneNumber,email, address);
 		return output;
 	}
-	
+	//===========================delet customer via xml==========================================
+		//======================task done by admin=====================
+		@DELETE
+		@Path("/") 
+		@Consumes(MediaType.APPLICATION_XML) 
+		@Produces(MediaType.TEXT_PLAIN) 
+		public String deletecustomer(String customerData) { 
+		
+			//Convert the input string to an XML document
+			Document doc = Jsoup.parse(customerData, "", Parser.xmlParser()); 
+		 
+			//Read the value from the element <customerID>
+			String customerId = doc.select("customerId").text(); 
+			
+			//Pass this cusid can call the deleteItem() method in the modeland
+			String output = customerObject.deletecustomer(customerId); 
+			return output; 
+		}
 	
 	
 	
