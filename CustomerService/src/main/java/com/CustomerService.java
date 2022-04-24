@@ -55,7 +55,7 @@ public class CustomerService {
 	@Path("/{firstName}")
 	@Produces(MediaType.TEXT_HTML)
 	public String viewCustomerByFirstName(@PathParam("firstName") String firstName) {
-	return customerObject.viewCustomer(firstName);
+	return customerObject.viewCustomerByFirstName(firstName);
 	}
 	
 	

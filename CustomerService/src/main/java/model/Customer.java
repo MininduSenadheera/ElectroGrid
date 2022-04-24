@@ -73,7 +73,7 @@ public class Customer {
 		return output;
 	}
 
-	// get particular customer details
+	// get particular customer details by customer id
 	public String viewCustomer(String customerId) {
 		String output = "";
 		try {
@@ -91,8 +91,57 @@ public class Customer {
 
 			// iterate through the rows in the result set
 			while (rs.next()) {
-				String userid = Integer.toString(rs.getInt("customerId"));
+				String customerId1 = Integer.toString(rs.getInt("customerId"));
 				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String nic = rs.getString("nic");
+				String phone = Integer.toString(rs.getInt("phone"));
+				String email = rs.getString("email");
+				String address = rs.getString("address");
+
+				// Add into the html table
+				output += "<tr><td>" + firstName + "</td>";
+				output += "<td>" + lastName + "</td>";
+				output += "<td>" + nic + "</td>";
+				output += "<td>" + phone + "</td>";
+				output += "<td>" + email + "</td>";
+				output += "<td>" + address + "</td>";
+
+				// buttons
+				output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>";
+
+			}
+			connection.close();
+			// Complete the html table
+			output += "</table>";
+		} catch (Exception e) {
+			output = "Error while reading the customer details.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+	
+	
+	
+	public String viewCustomerByFirstName(String firstName) {
+		String output = "";
+		try {
+			Connection connection = connect();
+			if (connection == null) {
+				return "Error while connecting to the database for reading.";
+			}
+			// Prepare the html table to be displayed
+			output = "<table border='1'><tr><th>First Name</th><th>Last Name</th>" + "<th>NIC</th>" + "<th>Address</th>"
+					+ "<th>Phone</th>" + "<th>Email</th>" + "<th>Update</th>";
+
+			String query = "select * from customer where firstName= '" + firstName + "' ";
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			// iterate through the rows in the result set
+			while (rs.next()) {
+				String customerId = Integer.toString(rs.getInt("customerId"));
+				String firstName1 = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String nic = rs.getString("nic");
 				String phone = Integer.toString(rs.getInt("phone"));
