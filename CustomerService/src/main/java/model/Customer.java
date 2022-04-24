@@ -163,6 +163,30 @@ public class Customer {
 	 return output;
 	 } 
 	
+	  //==============done by the admin ==================
+    public String deletecustomer(String customerId) {
+		String output = "";
+		try {
+			Connection connection = connect();
+			if (connection == null) {
+				return "Error while connecting to the database for deleting.";
+			}
+			// create a prepared statement
+			String query = "delete from customer where customerId=?";
+			PreparedStatement preparedStmt = connection.prepareStatement(query);
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(customerId));
+			// execute the statement
+			preparedStmt.execute();
+			connection.close();
+			output = "Deleted successfully";
+		} catch (Exception e) {
+			output = "Error while deleting the customer.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+	
 	
 	
 	
