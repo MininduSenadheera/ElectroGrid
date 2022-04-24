@@ -274,6 +274,43 @@ public class Bill {
 		}
 	}
 
+    // updating bill
+    public Response updateDeletePayment(BillBean billBean) {
+
+		try {
+			Connection connection = DBConnection.connect(); 
+			
+			if (connection == null) {
+				return Response.status(Status.INTERNAL_SERVER_ERROR)
+                                .entity("Error while connecting database for updating bill")
+                                .build();
+			}
+
+            String sql = "UPDATE Bill SET paymentID = ?, status = ? WHERE billID = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setNull(1, Types.NULL);
+            preparedStatement.setString(2, "Pending");
+            preparedStatement.setInt(3, billBean.getBillID());
+            int status = preparedStatement.executeUpdate();
+
+			connection.close();
+
+           if(status > 0) {
+                return Response.status(Status.OK).entity("Bill updated successfully").build(); 
+           } else {
+               return Response.status(Status.NOT_FOUND).entity("No bills found with the corresponding ID").build();
+           }
+			
+		} catch (SQLException se) {
+           System.err.println(se.getMessage());
+           return Response.status(Status.NOT_MODIFIED).entity(se.getMessage()).build(); 
+        } catch (Exception e) {
+		 	System.err.println(e.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build(); 
+		}
+	}
+
     // deleting bill
     public Response deleteBill(BillBean billBean) {
 

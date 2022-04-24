@@ -113,4 +113,10 @@ public class BillBean {
         setBillID(billObject.get("billID").getAsInt());
         setPaymentID(billObject.get("paymentID").getAsInt());
 	}
+
+    public void convertStringToJSONUpdateDeletePayment(String billData) {
+		//convert string to JSON object and assign to variables in the class
+		JsonObject billObject  = new JsonParser().parse(billData).getAsJsonObject();
+        setBillID(billObject.get("billID").getAsInt());
+	}
 }
