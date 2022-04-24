@@ -4,4 +4,5 @@ package bean;
 import com.google.gson.*;
 
 public class CustomerBean {
+	//aaaaaaaaaaaaaaa
 }
