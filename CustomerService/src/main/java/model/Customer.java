@@ -91,7 +91,16 @@ public class Customer {
   			
   			// iterate through the rows in the result set
   			while (rs.next()) {
+  				String userid = Integer.toString(rs.getInt("customerId"));
+  				String firstName = rs.getString("firstName");
+      			String lastName = rs.getString("lastName");
+  				String nic = rs.getString("nic");
+  				String phone = Integer.toString(rs.getInt("phone"));
+  				String email = rs.getString("email");
+  				String address = rs.getString("address");
   				
+  				
+  			
   				
   				
   				// buttons
