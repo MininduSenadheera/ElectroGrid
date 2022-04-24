@@ -187,24 +187,7 @@ public class Customer {
 		return output;
 	}
     
-    public String deletecustomer(int customerId) {
-		String output = "";
-		try {
-			Connection connection = connect();
-			if (connection == null) {
-				return "Error while connecting to the database for deleting.";
-			}
-			// create a prepared statement
-			String query = "delete from items where customerId=?";
-			PreparedStatement preparedStmt = connection.prepareStatement(query);
-			
-		} catch (Exception e) {
-			output = "Error while deleting the item.";
-			System.err.println(e.getMessage());
-		}
-		return output;
-	}
-	
+  
 	
 	
 	
