@@ -5,9 +5,7 @@ import model.Customer;
 import javax.annotation.security.RolesAllowed;
 
 
-//import bean.CustomerBean;
 
-//import javax.ejb.Stateless;
 //for REST service
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -37,7 +35,7 @@ public class CustomerService {
 //	============= task done by the admin===================
 
 	@GET
-	@Path("/")
+	@Path("/ViewAllCustomers")
 	@Produces(MediaType.TEXT_HTML)
 	public String readAllCustomers() {
 		return customerObject.readAllCustomers();
@@ -52,6 +50,19 @@ public class CustomerService {
 	public String viewCustomer(@PathParam("customerId") String customerId) {
 	return customerObject.viewCustomer(customerId);
 	}
+	
+	@GET
+	@Path("/{firstName}")
+	@Produces(MediaType.TEXT_HTML)
+	public String viewCustomerByFirstName(@PathParam("firstName") String firstName) {
+	return customerObject.viewCustomer(firstName);
+	}
+	
+	
+	
+	
+	
+	
 	
 
 	// ============insert customer============

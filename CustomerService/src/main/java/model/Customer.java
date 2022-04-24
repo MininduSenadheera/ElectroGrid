@@ -11,17 +11,17 @@ public class Customer {
 
 	// =============A common method to connect to the DB===========
 	private Connection connect() {
-		Connection con = null;
+		Connection connection = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// Provide the correct details: DBServer/DBName, username, password
 			// add mysql details
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electroGrid", "root", "12345");
+			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electroGrid", "root", "12345");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return con;
+		return connection;
 	}
 //********************* view all customer **************************
 
