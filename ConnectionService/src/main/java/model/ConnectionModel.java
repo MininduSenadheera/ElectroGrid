@@ -3,6 +3,10 @@ package model;
 import java.sql.*;
 
 import bean.ConnectionBean;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.Request;
 import util.DBConnection;
 
 public class ConnectionModel {
