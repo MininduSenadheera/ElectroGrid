@@ -34,4 +34,15 @@ public class ComplianceService {
 		    return output;
 		}
 		
+				// delete complain
+		@DELETE
+		@Path("/{complainID}")
+		@Produces(MediaType.TEXT_PLAIN)
+		public String deleteComplain(@PathParam("complainID") String complainID) {
+			ComplianceBean complianceBean = new ComplianceBean();
+			complianceBean.setComplainID(Integer.parseInt(complainID));  
+			
+			String output = complainObject.deleteComplain(complianceBean);
+			return output;
+		}
 }
