@@ -204,7 +204,15 @@ public class Customer {
   			 
   			 // binding values
 //  			 preparedStmt.setInt(1, customerId);
-  			
+  			 preparedStmt.setString(1, firstName);
+  		 	 preparedStmt.setString(2, lastName);
+  			 preparedStmt.setString(3, nic);
+  			 preparedStmt.setInt(4,Integer.parseInt(phone));
+  			preparedStmt.setString(5, email);
+  			 
+  			 preparedStmt.setString(6, address);
+  			preparedStmt.setInt(6, Integer.parseInt(customerId));
+  			 
   			
   			 
   			 // execute the statement
