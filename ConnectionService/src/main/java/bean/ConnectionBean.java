@@ -78,7 +78,7 @@ public class ConnectionBean {
 		JsonObject connectionObject  = new JsonParser().parse(connectionData).getAsJsonObject();
         setConnectionID(connectionObject.get("connectionID").getAsInt());
        	setStatus(connectionObject.get("status").getAsString());
-	   	// setUnits(connectionObject.get("units").getAsInt());
+	   	
 	}
 
 	public void convertStringToJSONUnits(String connectionData){

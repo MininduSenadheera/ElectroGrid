@@ -61,7 +61,7 @@ public class ConnectionService {
 
 
 
-    //delete bill
+    //delete connection
     @DELETE
 	@Path("/{connectionID}")
 	@Produces(MediaType.TEXT_PLAIN)

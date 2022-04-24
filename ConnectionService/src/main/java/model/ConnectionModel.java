@@ -3,6 +3,10 @@ package model;
 import java.sql.*;
 
 import bean.ConnectionBean;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
+import okhttp3.Request;
 import util.DBConnection;
 
 public class ConnectionModel {
@@ -68,8 +72,7 @@ public class ConnectionModel {
 		
 	}
 		
-	//updating connection 
-
+	//updating connection units
 	public String updateConnectionUnits(ConnectionBean connectionBean){
 
 		String output = "";
@@ -106,7 +109,7 @@ public class ConnectionModel {
 
 			connection.close();
 
-			output = Integer.toString(monthlyUnits);
+			output = "Used units fo this month :   " + Integer.toString(monthlyUnits);
 		} catch (Exception e){
 			output = "Error while updating the connection.";
 			System.err.println(e.getMessage());
@@ -116,6 +119,7 @@ public class ConnectionModel {
 			
 	}
 
+	//update connection status
 	public String updateConnectionStatus(ConnectionBean connectionBean){
 
 		String output = "";
@@ -127,17 +131,22 @@ public class ConnectionModel {
 				return "Error while connecting to database";
 			}
 
-		String sql = "UPDATE Connection SET  status = ?  WHERE connectionID=?";
+		 	String sql = "UPDATE Connection SET  status = ?  WHERE connectionID=?";
 
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		 	PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, connectionBean.getStatus());
         
 			preparedStatement.setInt(2, connectionBean.getConnectionID());
-            preparedStatement.execute();
+            int st =preparedStatement.executeUpdate();
+
+			if(st>0){
+				output = "Status updated successfully";
+			}else{
+				output = "Connection record not found with the corresponding ID";
+			}
 
 			connection.close();
 
-			output = "Status updated successfully";
 		} catch (Exception e){
 			output = "Error while updating the connection.";
 			System.err.println(e.getMessage());
@@ -158,15 +167,33 @@ public class ConnectionModel {
 				return "Error while connecting database for deleting the connection record";
 			}
 			
+			String query  = "SELECT * "+"FROM Bill b " + "WHERE b.connectionID=?";
+			
+			PreparedStatement preparedStmt = connection.prepareStatement(query);
+			preparedStmt.setInt(1, connectionBean.getConnectionID());
+			ResultSet resultSet = preparedStmt.executeQuery();
+			// ConnectionBean connectionBean = new ConnectionBean();
+
+			while(resultSet.next()){
+				//connectionBean.setConnectionID(resultSet.getInt("connectionID"));
+				GetDeleteServiceFromBill(resultSet.getInt("billID"));
+			}
+
 			String sql = "DELETE FROM Connection WHERE connectionID=?";
 
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			preparedStatement.setInt(1,connectionBean.getConnectionID());
-			preparedStatement.execute();
+			int st =preparedStatement.executeUpdate();
+
+			if(st>0){
+				output = "Connection record deleted successfully";
+			}else{
+				output = "Connection record not found with the corresponding ID";
+			}
 
 			connection.close();
 
-			output = "Connection record deleted successfully";
+			
 		} catch(Exception e){
 			System.err.println(e.getMessage());
 			output = "Error while deleting connection record";
@@ -175,37 +202,59 @@ public class ConnectionModel {
 		return output;
 	}
 
+	//creating a new record
 	public String newConnection(ConnectionBean connectionBean) {
 		
 		String output ="";
 
-	try {
+		try {
+			Connection connection = DBConnection.connect();
 
-		Connection connection = DBConnection.connect();
+			if(connection==null){
+				return "Error while connecting to the database";
+			}
 
-		if(connection==null){
-			return "Error while connecting to the database";
+			String sql = "INSERT INTO Connection (`customerID`,`status`,`type`,`units`)" + " VALUES(?,?,?,?)";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,connectionBean.getCustomerID());
+			preparedStatement.setString(2, connectionBean.getStatus());
+			preparedStatement.setString(3,connectionBean.getConnectionType());
+			preparedStatement.setInt(4, connectionBean.getUnits());
+
+			preparedStatement.execute();
+			connection.close();
+
+			output = "Connection Record Inserted Successfully";
+		} catch(Exception e){
+			System.err.println(e.getMessage());
+			output = "Error while inserting the connection";
 		}
 
-		String sql = "INSERT INTO Connection (`customerID`,`status`,`type`,`units`)" + " VALUES(?,?,?,?)";
-
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		preparedStatement.setInt(1,connectionBean.getCustomerID());
-		preparedStatement.setString(2, connectionBean.getStatus());
-		preparedStatement.setString(3,connectionBean.getConnectionType());
-		preparedStatement.setInt(4, connectionBean.getUnits());
-
-		preparedStatement.execute();
-		connection.close();
-
-		output = "Connection Record Inserted Successfully";
-	} catch(Exception e){
-		System.err.println(e.getMessage());
-		output = "Error while inserting the connection";
-
+			return output;
 	}
 
-		return output;
+	//this method call delete method in bill   
+	public String GetDeleteServiceFromBill(int billID) {
+
+		try {
+	
+			MediaType JSONType = MediaType.get("application/json; charset=utf-8");
+			OkHttpClient client = new OkHttpClient();
+			RequestBody body = RequestBody.create("{ 'billID':'" + billID + "'}", JSONType);
+			Request request = new Request.Builder().url("http://localhost:8080/BillService/Bill/").delete(body).build();
+	
+			try (okhttp3.Response response = client.newCall(request).execute()) {
+	
+				return response.body().string();
+			}
+	
+		} catch (Exception e) {
+	
+			System.err.println(e.getMessage());
+			return "Error while deleting bill related to connection";
+		}
+	
 	}
 
 	public String readUnits(String connectionID){
