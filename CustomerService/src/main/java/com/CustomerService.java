@@ -25,8 +25,8 @@ import org.jsoup.nodes.Document;
 public class CustomerService {
 	Customer customerObject = new Customer();
 
-//	================= view all customers ===============
-//	============= task done by the admin===================
+//***********view all**********
+	
 
 	@GET
 	@Path("/ViewAllCustomers")
@@ -35,8 +35,7 @@ public class CustomerService {
 		return customerObject.readAllCustomers();
 	}
 
-	// ================get users by user id==========
-//	//==================================
+	// ***************get customer by customer id***************
 	@GET
 	@Path("/{customerId}")
 	@Produces(MediaType.TEXT_HTML)
@@ -44,8 +43,7 @@ public class CustomerService {
 		return customerObject.viewCustomer(customerId);
 	}
 
-	// ============insert customer============
-	// ===========task dome by the customer only====================
+	//***********insert customer***********
 	@RolesAllowed({ "admin", "user" })
 	@POST
 	@Path("/")
@@ -61,9 +59,7 @@ public class CustomerService {
 		return output;
 	}
 
-	// ===========================delet customer via
-	// xml==========================================
-	// ======================task done by admin=====================
+	//*******************delete customer***********************
 	@DELETE
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -80,6 +76,7 @@ public class CustomerService {
 		String output = customerObject.deletecustomer(customerId);
 		return output;
 	}
+	//***********************update customer*********************
 
 	@PUT
 	@Path("/")

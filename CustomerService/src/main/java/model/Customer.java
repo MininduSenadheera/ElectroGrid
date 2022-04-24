@@ -5,7 +5,7 @@ import java.sql.*;
 //For JSON
 import com.google.gson.*;
 
-import util.DBConnection;
+
 
 public class Customer {
 
@@ -73,7 +73,7 @@ public class Customer {
 		return output;
 	}
 
-	// get particular customer details by customer id
+	// *************************get particular customer details by customer id*********************
 	public String viewCustomer(String customerId) {
 		String output = "";
 		try {
@@ -122,7 +122,7 @@ public class Customer {
 	}
 
 	// ********************** insert Customer ****************
-	// ==============task done only by customer===================
+	
 	public String insertCustomer(String firstName, String lastName, String nic, int phoneNumber, String email,
 			String address) {
 		String output = "";
@@ -136,14 +136,14 @@ public class Customer {
 					+ " values (?, ?, ?, ?, ?,?,?)";
 			PreparedStatement preparedStmt = connection.prepareStatement(query);
 			// binding values
-//	 preparedStmt.setInt(1, 0);
+
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setString(2, firstName);
 			preparedStmt.setString(3, lastName);
 			preparedStmt.setString(4, nic);
 			preparedStmt.setInt(5, phoneNumber);
 			preparedStmt.setString(6, email);
-//	 preparedStmt.setDouble(4, Double.parseDouble(price));
+
 			preparedStmt.setString(7, address);
 			// execute the statement
 
@@ -181,6 +181,8 @@ public class Customer {
 		}
 		return output;
 	}
+	
+	//********************* update customer ********************
 
 	public String updatecustomer(String customerId, String firstName, String lastName, String nic, String phone,
 			String email, String address) {
