@@ -72,8 +72,7 @@ public class ConnectionModel {
 		
 	}
 		
-	//updating connection 
-
+	//updating connection units
 	public String updateConnectionUnits(ConnectionBean connectionBean){
 
 		String output = "";
