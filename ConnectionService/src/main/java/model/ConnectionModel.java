@@ -237,7 +237,27 @@ public class ConnectionModel {
 			return output;
 	}
 
-		return output;
+	//this method call delete method in bill   
+	public String GetDeleteServiceFromBill(int billID) {
+
+		try {
+	
+			MediaType JSONType = MediaType.get("application/json; charset=utf-8");
+			OkHttpClient client = new OkHttpClient();
+			RequestBody body = RequestBody.create("{ 'billID':'" + billID + "'}", JSONType);
+			Request request = new Request.Builder().url("http://localhost:8080/BillService/Bill/").delete(body).build();
+	
+			try (okhttp3.Response response = client.newCall(request).execute()) {
+	
+				return response.body().string();
+			}
+	
+		} catch (Exception e) {
+	
+			System.err.println(e.getMessage());
+			return "Error while deleting bill related to connection";
+		}
+	
 	}
 
 	public String readUnits(String connectionID){
