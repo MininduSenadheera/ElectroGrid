@@ -2,10 +2,8 @@ package model;
 
 import java.sql.*;
 
-//import com.google.gson.JsonElement;
 //For JSON
 import com.google.gson.*;
-
 
 import util.DBConnection;
 
@@ -25,6 +23,7 @@ public class Customer {
 		}
 		return con;
 	}
+//********************* view all customer **************************
 
 	public String readAllCustomers() {
 		String output = "";
@@ -73,98 +72,94 @@ public class Customer {
 		}
 		return output;
 	}
-	 //get particular customer details
-  	public String viewCustomer(String customerId) {
-  		String output = "";
-  		try {
-  			Connection connection = connect();
-  			if (connection == null) {
-  				return "Error while connecting to the database for reading.";
-  			}
-  			// Prepare the html table to be displayed
-  			output = "<table border='1'><tr><th>First Name</th><th>Last Name</th>" + "<th>NIC</th>"
-  					+ "<th>Address</th>" + "<th>Phone</th>"+ "<th>Email</th>"+ "<th>Update</th>";
 
-  			String query = "select * from customer where customerId= '" + customerId +"' ";
-  			Statement stmt = connection.createStatement();
-  			ResultSet rs = stmt.executeQuery(query);
-  			
-  			// iterate through the rows in the result set
-  			while (rs.next()) {
-  				String userid = Integer.toString(rs.getInt("customerId"));
-  				String firstName = rs.getString("firstName");
-      			String lastName = rs.getString("lastName");
-  				String nic = rs.getString("nic");
-  				String phone = Integer.toString(rs.getInt("phone"));
-  				String email = rs.getString("email");
-  				String address = rs.getString("address");
-  				
-  				
-  			
-  				// Add into the html table
-  				output += "<tr><td>" + firstName + "</td>";
-  				output += "<td>" + lastName + "</td>";
-  				output += "<td>" + nic + "</td>";
-  				output += "<td>" + phone + "</td>";
-  				output += "<td>" + email + "</td>";
-  				output += "<td>" + address + "</td>";
-  				
-  				
-  				// buttons
-  				output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>";
-  			
-  			}
-  			connection.close();
-  			// Complete the html table
-  			output += "</table>";
-  		} catch (Exception e) {
-  			output = "Error while reading the customer details.";
-  			System.err.println(e.getMessage());
-  		}
-  		return output;
-  	}
-  	
+	// get particular customer details
+	public String viewCustomer(String customerId) {
+		String output = "";
+		try {
+			Connection connection = connect();
+			if (connection == null) {
+				return "Error while connecting to the database for reading.";
+			}
+			// Prepare the html table to be displayed
+			output = "<table border='1'><tr><th>First Name</th><th>Last Name</th>" + "<th>NIC</th>" + "<th>Address</th>"
+					+ "<th>Phone</th>" + "<th>Email</th>" + "<th>Update</th>";
 
-	//==============insert testing customer =======
-	//==============task done only by customer===================
-	public String insertCustomer(String firstName, String lastName, String nic, int phoneNumber,String email, String address)
-	 {
-	 String output = "";
-	 try
-	 {
-	 Connection connection = connect();
-	 if (connection == null)
-	 {return "Error while connecting to the database for inserting."; }
-	 // create a prepared statement
-	 String query = " insert into customer(`customerId`,`firstName`,`lastName`,`nic`,`phone`,`email`,`address`)"
-	 + " values (?, ?, ?, ?, ?,?,?)";
-	 PreparedStatement preparedStmt = connection.prepareStatement(query);
-	 // binding values
+			String query = "select * from customer where customerId= '" + customerId + "' ";
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			// iterate through the rows in the result set
+			while (rs.next()) {
+				String userid = Integer.toString(rs.getInt("customerId"));
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String nic = rs.getString("nic");
+				String phone = Integer.toString(rs.getInt("phone"));
+				String email = rs.getString("email");
+				String address = rs.getString("address");
+
+				// Add into the html table
+				output += "<tr><td>" + firstName + "</td>";
+				output += "<td>" + lastName + "</td>";
+				output += "<td>" + nic + "</td>";
+				output += "<td>" + phone + "</td>";
+				output += "<td>" + email + "</td>";
+				output += "<td>" + address + "</td>";
+
+				// buttons
+				output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>";
+
+			}
+			connection.close();
+			// Complete the html table
+			output += "</table>";
+		} catch (Exception e) {
+			output = "Error while reading the customer details.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+
+	// ********************** insert Customer ****************
+	// ==============task done only by customer===================
+	public String insertCustomer(String firstName, String lastName, String nic, int phoneNumber, String email,
+			String address) {
+		String output = "";
+		try {
+			Connection connection = connect();
+			if (connection == null) {
+				return "Error while connecting to the database for inserting.";
+			}
+			// create a prepared statement
+			String query = " insert into customer(`customerId`,`firstName`,`lastName`,`nic`,`phone`,`email`,`address`)"
+					+ " values (?, ?, ?, ?, ?,?,?)";
+			PreparedStatement preparedStmt = connection.prepareStatement(query);
+			// binding values
 //	 preparedStmt.setInt(1, 0);
-	 preparedStmt.setInt(1, 0);
-	 preparedStmt.setString(2, firstName);
-	 preparedStmt.setString(3, lastName);
-	 preparedStmt.setString(4, nic);
-	 preparedStmt.setInt(5, phoneNumber);
-	 preparedStmt.setString(6, email);
+			preparedStmt.setInt(1, 0);
+			preparedStmt.setString(2, firstName);
+			preparedStmt.setString(3, lastName);
+			preparedStmt.setString(4, nic);
+			preparedStmt.setInt(5, phoneNumber);
+			preparedStmt.setString(6, email);
 //	 preparedStmt.setDouble(4, Double.parseDouble(price));
-	 preparedStmt.setString(7, address);
-	 // execute the statement
-	 
-	 preparedStmt.execute();
-	 connection.close();
-	 output = "Inserted successfully";
-	 }
-	 catch (Exception e)
-	 {
-	 output = "Error while inserting the item.";
-	 System.err.println(e.getMessage());
-	 }
-	 return output;
-	 } 
-	
-	  //==============done by the admin ==================
-    public String deletecustomer(String customerId) {
+			preparedStmt.setString(7, address);
+			// execute the statement
+
+			preparedStmt.execute();
+			connection.close();
+			output = "Inserted successfully";
+		} catch (Exception e) {
+			output = "Error while inserting the item.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+
+	// ************************** delete customer *******************
+	// ********************* xml method lab 6 **********************
+	public String deletecustomer(String customerId) {
 		String output = "";
 		try {
 			Connection connection = connect();
@@ -186,56 +181,42 @@ public class Customer {
 		}
 		return output;
 	}
-    
 
-    public String updatecustomer(String customerId,String firstName, String lastName, String nic, String phone,String email,String address)
-  	{
-  		 String output = "";
-  		 try
-  		 {
-  		 Connection connection = connect();
-  		 if (connection == null)
-  		 {
-  			 return "Error while connecting to the database for updating."; }
-  			
-  		 	// create a prepared statement
-  			 String query = "UPDATE customer SET firstName=?,lastName=?,nic=?,phone=?,address=? WHERE customerId=?";
-  			 PreparedStatement preparedStmt = connection.prepareStatement(query);
-  			 
-  			 // binding values
+	public String updatecustomer(String customerId, String firstName, String lastName, String nic, String phone,
+			String email, String address) {
+		String output = "";
+		try {
+			Connection connection = connect();
+			if (connection == null) {
+				return "Error while connecting to the database for updating.";
+			}
+
+			// create a prepared statement
+			String query = "UPDATE customer SET firstName=?,lastName=?,nic=?,phone=?,address=? WHERE customerId=?";
+			PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+			// binding values
 //  			 preparedStmt.setInt(1, customerId);
-  			 preparedStmt.setString(1, firstName);
-  		 	 preparedStmt.setString(2, lastName);
-  			 preparedStmt.setString(3, nic);
-  			 preparedStmt.setInt(4,Integer.parseInt(phone));
-  			preparedStmt.setString(5, email);
-  			 
-  			 preparedStmt.setString(6, address);
-  			preparedStmt.setInt(6, Integer.parseInt(customerId));
-  			 
-  			
-  			 
-  			 // execute the statement
-  			 preparedStmt.execute();
-  			connection.close();
-  			 output = "Updated successfully";
-  		 }
-  		 catch (Exception e)
-  		 {
-  			 output = "Error while updating the User.";
-  			 System.err.println(e.getMessage());
-  		 }
-  		 	return output;
-  		 }
-    
+			preparedStmt.setString(1, firstName);
+			preparedStmt.setString(2, lastName);
+			preparedStmt.setString(3, nic);
+			preparedStmt.setInt(4, Integer.parseInt(phone));
+			preparedStmt.setString(5, email);
+
+			preparedStmt.setString(6, address);
+			preparedStmt.setInt(6, Integer.parseInt(customerId));
+
+			// execute the statement
+			preparedStmt.execute();
+			connection.close();
+			output = "Updated successfully";
+		} catch (Exception e) {
+			output = "Error while updating the User.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+
 //   
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
