@@ -73,6 +73,48 @@ public class Customer {
 		}
 		return output;
 	}
+	 //get particular customer details
+  	public String viewCustomer(String customerId) {
+  		String output = "";
+  		try {
+  			Connection connection = connect();
+  			if (connection == null) {
+  				return "Error while connecting to the database for reading.";
+  			}
+  			// Prepare the html table to be displayed
+  			output = "<table border='1'><tr><th>First Name</th><th>Last Name</th>" + "<th>NIC</th>"
+  					+ "<th>Address</th>" + "<th>Phone</th>"+ "<th>Email</th>"+ "<th>Update</th>";
 
+  			String query = "select * from customer where customerId= '" + customerId +"' ";
+  			Statement stmt = connection.createStatement();
+  			ResultSet rs = stmt.executeQuery(query);
+  			
+  			// iterate through the rows in the result set
+  			while (rs.next()) {
+  				
+  				
+  				
+  				// buttons
+  				output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>";
+  			
+  			}
+  			connection.close();
+  			// Complete the html table
+  			output += "</table>";
+  		} catch (Exception e) {
+  			output = "Error while reading the customer details.";
+  			System.err.println(e.getMessage());
+  		}
+  		return output;
+  	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

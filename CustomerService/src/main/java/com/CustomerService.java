@@ -47,5 +47,26 @@ public class CustomerService {
 	public String readAllCustomers() {
 		return customerObject.readAllCustomers();
 	}
+	
+
+	//================get users by user id==========
+//	//==================================
+	@GET
+	@Path("/{customerId}")
+	@Produces(MediaType.TEXT_HTML)
+	public String viewCustomer(@PathParam("customerId") String customerId) {
+	return customerObject.viewCustomer(customerId);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
