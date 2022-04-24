@@ -69,5 +69,38 @@ public class Compliance {
 
     } 
      
+   // updating an inserted complaint 
+    public String updateComplain(ComplianceBean complianceBean) { 
+
+    	String output = "";  
+			
+    	try { 
+    		Connection connection = DBConnection.connect();  
+    			if (connection == null) { 
+    				return "Error while connecting to the database for updating complain.";  
+    			} 
+
+             String sql = " UPDATE complaint SET  content = ?  WHERE complainID =?"; 
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql); 
+            preparedStatement.setString(1, complianceBean.getContent()); 
+            //preparedStatement.setString(2, complianceBean.getHeading()); 
+            preparedStatement.setInt(2, complianceBean.getComplainID()); 
+            preparedStatement.execute();
+
+            connection.close(); 
+
+ 
+            	output = "Complain updated successfully"; 
+
+    		} catch (Exception e) { 
+    			output = "Error while updating the complain.";  
+    			System.err.println(e.getMessage()); 
+    		} 
+
+    		return output; 
+
+    	} 
+     
 
 } 
