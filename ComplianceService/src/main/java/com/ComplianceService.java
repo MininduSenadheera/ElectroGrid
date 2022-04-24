@@ -45,4 +45,17 @@ public class ComplianceService {
 			String output = complainObject.deleteComplain(complianceBean);
 			return output;
 		}
+		
+		//insert a new Complain
+	    @POST
+	    @Path("/")
+	    @Consumes(MediaType.APPLICATION_JSON)
+	    @Produces(MediaType.TEXT_PLAIN)
+	    public String newComplain (String complainData){
+	        ComplianceBean complianceBean = new ComplianceBean();
+	        complianceBean.convertStringToJSONInsert(complainData);
+
+	        String output = complainObject.newComplain(complianceBean);
+	        return output;
+	    }
 }
