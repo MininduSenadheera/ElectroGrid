@@ -131,9 +131,9 @@ public class ConnectionModel {
 				return "Error while connecting to database";
 			}
 
-		String sql = "UPDATE Connection SET  status = ?  WHERE connectionID=?";
+		 	String sql = "UPDATE Connection SET  status = ?  WHERE connectionID=?";
 
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		 	PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, connectionBean.getStatus());
         
 			preparedStatement.setInt(2, connectionBean.getConnectionID());
@@ -147,7 +147,6 @@ public class ConnectionModel {
 
 			connection.close();
 
-			output = "Status updated successfully";
 		} catch (Exception e){
 			output = "Error while updating the connection.";
 			System.err.println(e.getMessage());
@@ -194,7 +193,7 @@ public class ConnectionModel {
 
 			connection.close();
 
-			output = "Connection record deleted successfully";
+			
 		} catch(Exception e){
 			System.err.println(e.getMessage());
 			output = "Error while deleting connection record";
@@ -208,29 +207,28 @@ public class ConnectionModel {
 		
 		String output ="";
 
-	try {
+		try {
+			Connection connection = DBConnection.connect();
 
-		Connection connection = DBConnection.connect();
+			if(connection==null){
+				return "Error while connecting to the database";
+			}
 
-		if(connection==null){
-			return "Error while connecting to the database";
-		}
+			String sql = "INSERT INTO Connection (`customerID`,`status`,`type`,`units`)" + " VALUES(?,?,?,?)";
 
-		String sql = "INSERT INTO Connection (`customerID`,`status`,`type`,`units`)" + " VALUES(?,?,?,?)";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1,connectionBean.getCustomerID());
+			preparedStatement.setString(2, connectionBean.getStatus());
+			preparedStatement.setString(3,connectionBean.getConnectionType());
+			preparedStatement.setInt(4, connectionBean.getUnits());
 
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		preparedStatement.setInt(1,connectionBean.getCustomerID());
-		preparedStatement.setString(2, connectionBean.getStatus());
-		preparedStatement.setString(3,connectionBean.getConnectionType());
-		preparedStatement.setInt(4, connectionBean.getUnits());
+			preparedStatement.execute();
+			connection.close();
 
-		preparedStatement.execute();
-		connection.close();
-
-		output = "Connection Record Inserted Successfully";
-	} catch(Exception e){
-		System.err.println(e.getMessage());
-		output = "Error while inserting the connection";
+			output = "Connection Record Inserted Successfully";
+		} catch(Exception e){
+			System.err.println(e.getMessage());
+			output = "Error while inserting the connection";
 		}
 
 			return output;
