@@ -98,6 +98,31 @@ public class CustomerService {
 			String output = customerObject.deletecustomer(customerId); 
 			return output; 
 		}
+		@PUT
+		@Path("/")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.TEXT_PLAIN)
+		public String updatecustomer(String customerData)
+		{
+			//Convert the input string to a JSON object
+			 JsonObject customerObject1 = new JsonParser().parse(customerData).getAsJsonObject();
+			
+			 //Read the values from the JSON object
+			 
+			 String customerId = customerObject1.get("customerId").getAsString();	
+			 String firstName = customerObject1.get("firstName").getAsString();
+			 String lastName = customerObject1.get("lastName").getAsString();
+			 String nic = customerObject1.get("nic").getAsString();
+			 String phoneNumber = customerObject1.get("phone").getAsString();
+			 String email = customerObject1.get("email").getAsString();
+			 String address = customerObject1.get("address").getAsString();
+			 
+					
+			 String output = customerObject.updatecustomer(customerId, firstName, lastName, nic,phoneNumber,email,address);
+		
+			 return output;
+		}
+		
 	
 	
 	
