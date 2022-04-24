@@ -123,6 +123,36 @@ public class Customer {
   		}
   		return output;
   	}
+  	
+
+	//==============insert testing customer =======
+	//==============task done only by customer===================
+	public String insertCustomer(String firstName, String lastName, String nic, int phoneNumber,String email, String address)
+	 {
+	 String output = "";
+	 try
+	 {
+	 Connection connection = connect();
+	 if (connection == null)
+	 {return "Error while connecting to the database for inserting."; }
+	 // create a prepared statement
+	 String query = " insert into customer(`customerId`,`firstName`,`lastName`,`nic`,`phone`,`email`,`address`)"
+	 + " values (?, ?, ?, ?, ?,?,?)";
+	 PreparedStatement preparedStmt = connection.prepareStatement(query);
+	 // binding values
+//	 preparedStmt.setInt(1, 0);
+	
+	 preparedStmt.execute();
+	 connection.close();
+	 output = "Inserted successfully";
+	 }
+	 catch (Exception e)
+	 {
+	 output = "Error while inserting the item.";
+	 System.err.println(e.getMessage());
+	 }
+	 return output;
+	 } 
 	
 	
 	
