@@ -228,38 +228,38 @@ public class Customer {
   		 	return output;
   		 }
     
-    public String updatecustomer(CustomerBean customerBean) {
-		String output = ""; 
-
-	   try {
-			Connection connection = DBConnection.connect(); 
-			
-			if (connection == null) {
-				return "Error while connecting to the database for updating user."; 
-			}
-
-			String query = "UPDATE customer SET customerId=?,firstName=?,lastName=?,nic=?,phoneNumber=?,address=? WHERE customerId=?";
-		    PreparedStatement preparedStmt = connection.prepareStatement(query);
-
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, customerBean.getCustomerId());
-			preparedStmt.setString(2, customerBean.getFirstName());
-		    preparedStmt.setString(3, customerBean.getLastName());
-		    preparedStmt.setString(4, customerBean.getNic());
-		    preparedStmt.setInt(5, customerBean.getPhoneNumber());
-		    preparedStmt.setString(6, customerBean.getAddress());
-
-            preparedStatement.execute();
-
-			connection.close();
-			
-			output = "userl updated successfully"; 
-		} catch (Exception e) {
-			output = "Error while updating the user."; 
-			System.err.println(e.getMessage());
-		}
-		return output;
-	}
+//    public String updatecustomer(CustomerBean customerBean) {
+//		String output = ""; 
+//
+//	   try {
+//			Connection connection = DBConnection.connect(); 
+//			
+//			if (connection == null) {
+//				return "Error while connecting to the database for updating user."; 
+//			}
+//
+//			String query = "UPDATE customer SET customerId=?,firstName=?,lastName=?,nic=?,phoneNumber=?,address=? WHERE customerId=?";
+//		    PreparedStatement preparedStmt = connection.prepareStatement(query);
+//
+//            PreparedStatement preparedStatement = connection.prepareStatement(query);
+//			preparedStatement.setInt(1, customerBean.getCustomerId());
+//			preparedStmt.setString(2, customerBean.getFirstName());
+//		    preparedStmt.setString(3, customerBean.getLastName());
+//		    preparedStmt.setString(4, customerBean.getNic());
+//		    preparedStmt.setInt(5, customerBean.getPhoneNumber());
+//		    preparedStmt.setString(6, customerBean.getAddress());
+//
+//            preparedStatement.execute();
+//
+//			connection.close();
+//			
+//			output = "userl updated successfully"; 
+//		} catch (Exception e) {
+//			output = "Error while updating the user."; 
+//			System.err.println(e.getMessage());
+//		}
+//		return output;
+//	}
 	
 	
 	
