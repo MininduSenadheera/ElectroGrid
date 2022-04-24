@@ -71,12 +71,14 @@ public class CustomerService {
 			@FormParam("lastName") String lastName,
 			@FormParam("nic") String nic,
 			@FormParam("phoneNumber") int phoneNumber, 
+			@FormParam("email") String email,
+			@FormParam("address") String address)
 			
 	{
 
 
-//		String output = customerObject.insertCustomer( firstName, lastName, nic, phoneNumber,email, address);
-//		return output;
+		String output = customerObject.insertCustomer( firstName, lastName, nic, phoneNumber,email, address);
+		return output;
 	}
 	
 	
