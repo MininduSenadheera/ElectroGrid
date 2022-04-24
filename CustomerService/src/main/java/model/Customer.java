@@ -43,7 +43,26 @@ public class Customer {
 			ResultSet rs = stmt.executeQuery(query);
 			// iterate through the rows in the result set
 			while (rs.next()) {
-				
+				int customerId = rs.getInt("customerId");
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String nic = rs.getString("nic");
+				int phoneNumber = rs.getInt("phone");
+				String email = rs.getString("email");
+				String address = rs.getString("address");
+				// Add into the html table
+				output += "<tr><td>" + customerId + "</td>";
+				output += "<td>" + firstName + "</td>";
+				output += "<td>" + lastName + "</td>";
+				output += "<td>" + nic + "</td>";
+				output += "<td>" + phoneNumber + "</td>";
+				output += "<td>" + email + "</td>";
+				output += "<td>" + address + "</td>";
+				// buttons
+				output += "<td><input name='btnUpdate' type='button' value='Update'class='btn btn-secondary'></td>"
+						+ "<td><form method='post' action='Customers.jsp'>"
+						+ "<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
+						+ "<input name='itemID' type='hidden' value='" + customerId + "'>" + "</form></td></tr>";
 			}
 			connection.close();
 			// Complete the html table
