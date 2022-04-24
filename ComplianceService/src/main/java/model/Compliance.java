@@ -102,5 +102,67 @@ public class Compliance {
 
     	} 
      
+    // deleting an inserted complaint 
+    public String deleteComplain(ComplianceBean complianceBean) { 
+
+        String output = ""; 
+ 
+        try { 
+            Connection connection = DBConnection.connect(); 
+            if (connection == null) { 
+
+                return "Error while connecting database for deleting complain"; 
+
+            } 
+ 
+            String sql = "DELETE FROM complaint WHERE complainID = ? "; 
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql); 
+            preparedStatement.setInt(1,complianceBean.getComplainID()); 
+            preparedStatement.execute(); 
+            connection.close(); 
+ 
+            output = "Complain deleted successfully"; 
+
+        } catch (Exception e) { 
+            System.err.println (e.getMessage()); 
+            output = "Error while deleting complain"; 
+
+        } 
+
+        return output; 
+
+    } 
+    
+public String newComplain(ComplianceBean complianceBean) {
+		
+		String output ="";
+
+	try {
+		Connection connection = DBConnection.connect();
+		if(connection==null){
+			return "Error while connecting to the database";
+		}
+
+		String sql = "INSERT INTO complaint (`customerID`,`content`,`heading`,`specification`)" + " VALUES(?,?,?,?)";
+
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setInt(1,complianceBean.getCustomerID());
+		preparedStatement.setString(2, complianceBean.getContent());
+		preparedStatement.setString(3,complianceBean.getHeading());
+		preparedStatement.setString(4, complianceBean.getSpecification());
+		
+		preparedStatement.execute();
+		connection.close();
+
+		output = "Complaint Record Inserted Successfully";
+	} catch(Exception e){
+		System.err.println(e.getMessage());
+		output = "Error while inserting the complaint";
+
+	}
+
+		return output;
+	}
 
 } 
