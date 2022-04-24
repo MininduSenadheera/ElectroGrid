@@ -110,7 +110,7 @@ public class ConnectionModel {
 
 			connection.close();
 
-			output = Integer.toString(monthlyUnits);
+			output = "Used units fo this month :   " + Integer.toString(monthlyUnits);
 		} catch (Exception e){
 			output = "Error while updating the connection.";
 			System.err.println(e.getMessage());
@@ -120,6 +120,7 @@ public class ConnectionModel {
 			
 	}
 
+	//update connection status
 	public String updateConnectionStatus(ConnectionBean connectionBean){
 
 		String output = "";
@@ -137,7 +138,13 @@ public class ConnectionModel {
 			preparedStatement.setString(1, connectionBean.getStatus());
         
 			preparedStatement.setInt(2, connectionBean.getConnectionID());
-            preparedStatement.execute();
+            int st =preparedStatement.executeUpdate();
+
+			if(st>0){
+				output = "Status updated successfully";
+			}else{
+				output = "Connection record not found with the corresponding ID";
+			}
 
 			connection.close();
 
@@ -162,11 +169,29 @@ public class ConnectionModel {
 				return "Error while connecting database for deleting the connection record";
 			}
 			
+			String query  = "SELECT * "+"FROM Bill b " + "WHERE b.connectionID=?";
+			
+			PreparedStatement preparedStmt = connection.prepareStatement(query);
+			preparedStmt.setInt(1, connectionBean.getConnectionID());
+			ResultSet resultSet = preparedStmt.executeQuery();
+			// ConnectionBean connectionBean = new ConnectionBean();
+
+			while(resultSet.next()){
+				//connectionBean.setConnectionID(resultSet.getInt("connectionID"));
+				GetDeleteServiceFromBill(resultSet.getInt("billID"));
+			}
+
 			String sql = "DELETE FROM Connection WHERE connectionID=?";
 
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			preparedStatement.setInt(1,connectionBean.getConnectionID());
-			preparedStatement.execute();
+			int st =preparedStatement.executeUpdate();
+
+			if(st>0){
+				output = "Connection record deleted successfully";
+			}else{
+				output = "Connection record not found with the corresponding ID";
+			}
 
 			connection.close();
 
@@ -179,6 +204,7 @@ public class ConnectionModel {
 		return output;
 	}
 
+	//creating a new record
 	public String newConnection(ConnectionBean connectionBean) {
 		
 		String output ="";
@@ -206,7 +232,9 @@ public class ConnectionModel {
 	} catch(Exception e){
 		System.err.println(e.getMessage());
 		output = "Error while inserting the connection";
+		}
 
+			return output;
 	}
 
 		return output;
