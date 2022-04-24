@@ -141,7 +141,16 @@ public class Customer {
 	 PreparedStatement preparedStmt = connection.prepareStatement(query);
 	 // binding values
 //	 preparedStmt.setInt(1, 0);
-	
+	 preparedStmt.setInt(1, 0);
+	 preparedStmt.setString(2, firstName);
+	 preparedStmt.setString(3, lastName);
+	 preparedStmt.setString(4, nic);
+	 preparedStmt.setInt(5, phoneNumber);
+	 preparedStmt.setString(6, email);
+//	 preparedStmt.setDouble(4, Double.parseDouble(price));
+	 preparedStmt.setString(7, address);
+	 // execute the statement
+	 
 	 preparedStmt.execute();
 	 connection.close();
 	 output = "Inserted successfully";
