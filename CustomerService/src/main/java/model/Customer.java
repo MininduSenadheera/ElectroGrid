@@ -23,6 +23,12 @@ public class Customer {
 		}
 		return connection;
 	}
+	
+	
+	
+	
+	
+	
 //********************* view all customer **************************
 
 	public String readAllCustomers() {

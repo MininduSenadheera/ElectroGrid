@@ -44,7 +44,7 @@ public class CustomerService {
 	}
 
 	//***********insert customer***********
-	@RolesAllowed({ "admin", "user" })
+	
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -76,6 +76,13 @@ public class CustomerService {
 		String output = customerObject.deletecustomer(customerId);
 		return output;
 	}
+	
+	//=========== Reading Details of a specific User for login ================================
+	
+		@GET
+		@Path("/User/{customerId}/Nic/{nic}"){
+		
+		}
 	//***********************update customer*********************
 
 	@PUT
@@ -101,5 +108,6 @@ public class CustomerService {
 
 		return output;
 	}
+	
 
 }
