@@ -162,7 +162,9 @@ public class Customer {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				String nic = rs.getString("nic");
-				
+				String phone = Integer.toString(rs.getInt("phone"));
+				String email = rs.getString("email");
+				String address = rs.getString("address");
 
 			 
 			 // buttons
