@@ -134,10 +134,31 @@ public class Customer {
 		 String output = "";
 		 try
 		 {
-			 Connection con = connect();
-		 if (con == null)
+			 Connection connection = connect();
+		 if (connection == null)
 		 {
 			 return "Error while connecting to the database for reading."; }
+}
+		 
+		 // Prepare the html table to be displayed
+		 output = "<table border='1'><tr>"+
+				 "<th>User ID</th>" +
+				 "<th>User Name</th>" +
+				 "<th>Email</th>" +
+				 "<th>First Name</th><th>Last Name</th>" +
+				 "<th>Card Number</th>" +
+				 "<th>CVV</th>" +
+				 "<th>Expiration Date</th>" +
+				 "<th>Password</th></tr>";
+		
+		 
+		 // iterate through the rows in the result set
+		
+		 connection.close();
+		 
+		 // Complete the html table
+		 output += "</table>";
+	 }
 		 
 		 
 		 
