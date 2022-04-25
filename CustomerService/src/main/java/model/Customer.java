@@ -185,6 +185,12 @@ public class Customer {
 		 // Complete the html table
 		 output += "</table>";
 	 }
+	catch (Exception e)
+	 {
+		 output = "Error while reading Users.";
+		 System.err.println(e.getMessage());
+	 }
+		 return output;
 		 
 		 
 		 
