@@ -82,8 +82,10 @@ public class CustomerService {
 		@GET
 		@Path("/User/{customerId}/Nic/{nic}")
 			@Produces(MediaType.TEXT_HTML)
-			public String userLogin(@PathParam("userName") String customerId,
+			public String userLogin(@PathParam("customerId") String customerId,
 					@PathParam("nic") String nic){
+			return customerObject.readUserDetails(customerId,nic);
+			
 		
 		}
 	//***********************update customer*********************
