@@ -215,7 +215,7 @@ public class Bill {
             }
 
             // validating data
-            if (validations.insertValidation(billBean.getBillID(), billBean.getUnits()) == false){
+            if (validations.insertValidation(billBean.getConnectionID(), billBean.getUnits()) == false){
                 return Response.status(Status.PRECONDITION_FAILED).entity("Unacceptable Values").build();
             }
 
