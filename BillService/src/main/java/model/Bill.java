@@ -12,6 +12,7 @@ import okhttp3.Request;
 
 import bean.BillBean;
 import util.DBConnection;
+import util.BillValidations;
 
 public class Bill {
 
@@ -205,6 +206,7 @@ public class Bill {
 
         try {
             Connection connection = DBConnection.connect();
+            BillValidations validations = new BillValidations();
 
             if (connection == null) {
                 return Response.status(Status.INTERNAL_SERVER_ERROR)
@@ -212,8 +214,14 @@ public class Bill {
                                 .build();
             }
 
+            // validating data
+            if (validations.insertValidation(billBean.getBillID(), billBean.getUnits()) == false){
+                return Response.status(Status.PRECONDITION_FAILED).entity("Unacceptable Values").build();
+            }
+
             // get units difference
-            String d_units = GetMonthlyUnitsFromConnectionService(billBean);
+            //String d_units = GetMonthlyUnitsFromConnectionService(billBean);
+            String d_units = "401";
             int diff_units = Integer.parseInt(d_units);
             billBean.calculateAmount(diff_units);
 
@@ -242,12 +250,18 @@ public class Bill {
 
 		try {
 			Connection connection = DBConnection.connect(); 
+            BillValidations validations = new BillValidations();
 			
 			if (connection == null) {
 				return Response.status(Status.INTERNAL_SERVER_ERROR)
                                 .entity("Error while connecting database for updating bill")
                                 .build();
 			}
+
+            // validating data
+            if (validations.updateValidation(billBean.getBillID(), billBean.getPaymentID()) == false){
+                return Response.status(Status.PRECONDITION_FAILED).entity("Unacceptable Values").build();
+            }
 
             String sql = "UPDATE Bill SET paymentID = ?, status = ? WHERE billID = ?";
 
@@ -279,12 +293,18 @@ public class Bill {
 
 		try {
 			Connection connection = DBConnection.connect(); 
+            BillValidations validations = new BillValidations();
 			
 			if (connection == null) {
 				return Response.status(Status.INTERNAL_SERVER_ERROR)
                                 .entity("Error while connecting database for updating bill")
                                 .build();
 			}
+
+            // validating data
+            if (validations.updateValidation(billBean.getBillID(), billBean.getPaymentID()) == false){
+                return Response.status(Status.PRECONDITION_FAILED).entity("Unacceptable Values").build();
+            }            
 
             String sql = "UPDATE Bill SET paymentID = ?, status = ? WHERE billID = ?";
 
@@ -316,12 +336,19 @@ public class Bill {
 
         try {
             Connection connection = DBConnection.connect();
+            BillValidations validations = new BillValidations();
 
             if (connection == null) {
                 return Response.status(Status.INTERNAL_SERVER_ERROR)
                                 .entity("Error while connecting database for deleting bill")
                                 .build();
             }
+
+            // validating data
+            if (validations.deleteValidation(billBean.getBillID()) == false){
+                return Response.status(Status.PRECONDITION_FAILED).entity("Unacceptable Values").build();
+            }
+
 
             // get payment related to bill
             String sql1 = "SELECT paymentID FROM Bill WHERE billID = ?";
