@@ -77,17 +77,7 @@ public class CustomerService {
 		return output;
 	}
 	
-	//=========== Reading Details of a specific User for login ================================
-	
-		@GET
-		@Path("/User/{customerId}/Nic/{nic}")
-			@Produces(MediaType.TEXT_HTML)
-			public String userLogin(@PathParam("customerId") String customerId,
-					@PathParam("nic") String nic){
-			return customerObject.readUserDetails(customerId,nic);
-			
-		
-		}
+
 	//***********************update customer*********************
 
 	@PUT
