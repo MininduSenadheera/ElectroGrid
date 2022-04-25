@@ -165,6 +165,15 @@ public class Customer {
 				String phone = Integer.toString(rs.getInt("phone"));
 				String email = rs.getString("email");
 				String address = rs.getString("address");
+				
+				
+				// Add into the html table
+				output += "<tr><td>" + firstName + "</td>";
+				output += "<td>" + lastName + "</td>";
+				output += "<td>" + nic + "</td>";
+				output += "<td>" + phone + "</td>";
+				output += "<td>" + email + "</td>";
+				output += "<td>" + address + "</td>";
 
 			 
 			 // buttons
