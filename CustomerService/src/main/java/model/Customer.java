@@ -156,7 +156,14 @@ public class Customer {
 		 ResultSet rs = stmt.executeQuery(query);
 		 
 		 // iterate through the rows in the result set
-		
+		 while (rs.next())
+		 {
+
+			 
+			 // buttons
+			 output +="<input name='userId' type='hidden' value='" + userId
+			 + "'>" + "</form></td></tr>";
+	 }
 		 connection.close();
 		 
 		 // Complete the html table
