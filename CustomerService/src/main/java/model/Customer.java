@@ -126,6 +126,31 @@ public class Customer {
 		}
 		return output;
 	}
+	
+	
+	
+	public String readUserDetails(String userName,String password)
+	 {
+		 String output = "";
+		 try
+		 {
+			 Connection con = connect();
+		 if (con == null)
+		 {
+			 return "Error while connecting to the database for reading."; }
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 }
 
 	// ********************** insert Customer ****************
 	
