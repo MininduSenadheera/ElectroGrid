@@ -80,7 +80,10 @@ public class CustomerService {
 	//=========== Reading Details of a specific User for login ================================
 	
 		@GET
-		@Path("/User/{customerId}/Nic/{nic}"){
+		@Path("/User/{customerId}/Nic/{nic}")
+			@Produces(MediaType.TEXT_HTML)
+			public String userLogin(@PathParam("userName") String customerId,
+					@PathParam("nic") String nic){
 		
 		}
 	//***********************update customer*********************
