@@ -151,6 +151,9 @@ public class Customer {
 				 "<th>Expiration Date</th>" +
 				 "<th>Password</th></tr>";
 		
+		 String query = "select * from user where userName = '" + userName +"' AND password = '" + password + "'";
+		 Statement stmt = connection.createStatement();
+		 ResultSet rs = stmt.executeQuery(query);
 		 
 		 // iterate through the rows in the result set
 		
