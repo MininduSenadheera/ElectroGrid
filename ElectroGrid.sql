@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 26, 2022 at 09:37 AM
+-- Generation Time: Apr 26, 2022 at 07:49 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.1
 
@@ -44,8 +44,9 @@ CREATE TABLE `Bill` (
 
 INSERT INTO `Bill` (`billID`, `connectionID`, `paymentID`, `issueDate`, `dueDate`, `status`, `units`, `amount`) VALUES
 (20, 1, NULL, '2022-04-22', '2022-05-22', 'Pending', 300, 9000),
-(21, 1, NULL, '2022-04-23', '2022-05-23', 'Pending', 300, 9000),
-(23, 1, 1, '2022-06-09', '2022-07-09', 'Paid', 45, 3000);
+(24, 2, 2, '2022-03-15', '2022-04-15', 'Paid', 200, 2000),
+(25, 2, 3, '2022-04-26', '2022-05-26', 'Paid', 201, 5008.5),
+(26, 2, NULL, '2022-04-26', '2022-05-26', 'Pending', 200, 4963.5);
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,8 @@ CREATE TABLE `Connection` (
 --
 
 INSERT INTO `Connection` (`connectionID`, `customerID`, `status`, `type`, `units`) VALUES
-(1, 1, 'Active', '3 Phase', 3000);
+(1, 1, 'Active', '3 Phase', 3000),
+(2, 1, 'Active', 'Domestic', 30200);
 
 -- --------------------------------------------------------
 
@@ -112,7 +114,8 @@ CREATE TABLE `Customer` (
 --
 
 INSERT INTO `Customer` (`customerID`, `firstName`, `lastName`, `NIC`, `phone`, `email`, `address`) VALUES
-(1, 'Minindu', 'Senadheera', '200024201270', '0767041198', 'minindusenadheera@gmail.com', '199/1, Bolabotuwa, Bandaragama');
+(1, 'Minindu', 'Senadheera', '200024201270', '0767041198', 'minindusenadheera@gmail.com', '199/1, Bolabotuwa, Bandaragama'),
+(2, 'Onara', 'Pathiraja', '2000769699', '0771229876', 'onara@gmail.com', 'No.69 Gampaha');
 
 -- --------------------------------------------------------
 
@@ -156,7 +159,10 @@ CREATE TABLE `Payment` (
 --
 
 INSERT INTO `Payment` (`paymentID`, `customerID`, `paymentDateTime`, `amount`, `type`) VALUES
-(1, 1, '2022-04-26 07:36:48', 3000, 'Online');
+(1, 1, '2022-04-26 07:36:48', 3000, 'Online'),
+(2, 1, '2022-04-26 17:29:35', 2000, 'Cash'),
+(3, 1, '2022-04-26 17:28:21', 5008.5, 'Cash'),
+(4, 1, '2022-04-26 17:46:52', 9000, 'Online');
 
 --
 -- Indexes for dumped tables
@@ -211,7 +217,7 @@ ALTER TABLE `Payment`
 -- AUTO_INCREMENT for table `Bill`
 --
 ALTER TABLE `Bill`
-  MODIFY `billID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `billID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `complaint`
@@ -223,19 +229,19 @@ ALTER TABLE `complaint`
 -- AUTO_INCREMENT for table `Connection`
 --
 ALTER TABLE `Connection`
-  MODIFY `connectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `connectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Customer`
 --
 ALTER TABLE `Customer`
-  MODIFY `customerID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `customerID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Payment`
 --
 ALTER TABLE `Payment`
-  MODIFY `paymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `paymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
