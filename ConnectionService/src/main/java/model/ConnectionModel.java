@@ -7,6 +7,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.Request;
+import util.ConnectionValidation;
 import util.DBConnection;
 
 public class ConnectionModel {
@@ -79,9 +80,14 @@ public class ConnectionModel {
 
 		try {
 			Connection connection =DBConnection.connect();
+			ConnectionValidation validation = new ConnectionValidation();
 
 			if(connection==null){
 				return "Error while connecting to database";
+			}
+
+			if(validation.unitsValidation(connectionBean.getUnits())==false){
+				return "units values are no accepted";
 			}
 
 			String query = "SELECT units FROM Connection WHERE connectionID=?";
@@ -126,11 +132,17 @@ public class ConnectionModel {
 
 		try {
 			Connection connection =DBConnection.connect();
+			ConnectionValidation validation = new ConnectionValidation();
 
 			if(connection==null){
 				return "Error while connecting to database";
 			}
 
+			//validating data 
+			if(validation.statusValidation(connectionBean.getStatus()) == false ){
+				return "Status values are unaccepted";
+			}
+			
 		 	String sql = "UPDATE Connection SET  status = ?  WHERE connectionID=?";
 
 		 	PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -206,12 +218,28 @@ public class ConnectionModel {
 	public String newConnection(ConnectionBean connectionBean) {
 		
 		String output ="";
-
+	
 		try {
 			Connection connection = DBConnection.connect();
+			ConnectionValidation validation = new ConnectionValidation();
 
 			if(connection==null){
 				return "Error while connecting to the database";
+			}
+			
+			//validating data 
+			if(validation.statusValidation(connectionBean.getStatus()) == false ){
+				return "Status values are unaccepted";
+			}
+
+			if(validation.unitsValidation(connectionBean.getUnits())==false){
+				return "units values are no accepted";
+			}
+
+			if(validation.typeValidation(connectionBean.getConnectionType())==false){
+				return "type values are not accepted";
+			}else{
+				System.out.println("error");
 			}
 
 			String sql = "INSERT INTO Connection (`customerID`,`status`,`type`,`units`)" + " VALUES(?,?,?,?)";
@@ -256,6 +284,7 @@ public class ConnectionModel {
 		}
 	
 	}
+
 
 	public String readUnits(String connectionID){
 		String output = "";
