@@ -40,6 +40,7 @@ public class Bill {
             preparedStatement.setInt(1, billBean.getBillID());
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            //checking if data is available
             if (resultSet.next()) {
                 billBean.setBillID(resultSet.getInt("billID"));
                 billBean.setConnectionID(resultSet.getInt("connectionID"));
@@ -54,7 +55,6 @@ public class Bill {
             } else {
             	return Response.status(Status.NOT_FOUND).entity("No bills found with the corresponding ID").build();
             }
-            
             
             connection.close();
 
@@ -273,6 +273,7 @@ public class Bill {
 
 			connection.close();
 
+            //checking if the bill is updated
             if(status > 0) {
                 return Response.status(Status.OK).entity("Bill updated successfully").build(); 
             } else {
@@ -316,6 +317,7 @@ public class Bill {
 
 			connection.close();
 
+            //checking if the bill is updated
            if(status > 0) {
                 return Response.status(Status.OK).entity("Bill updated successfully").build(); 
            } else {
@@ -373,6 +375,7 @@ public class Bill {
 
             connection.close(); 
 
+            //checking if the bill is updated
             if(status > 0) {
                 return Response.status(Status.OK).entity("Bill deleted successfully").build();
             } else {
