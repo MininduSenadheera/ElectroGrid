@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 import bean.PaymentBean;
 import util.DBConnection;
-
+import util.PaymentValidations;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,12 +21,18 @@ public class Payment {
 
 	        try {
 	            Connection connection = DBConnection.connect();
-
+	            PaymentValidations validations = new PaymentValidations();
+	            
 	            if (connection == null) {
 	                return ("Error while connecting database for inserting payment");
 	                               
 	            }
-
+	            
+	            // validating data
+	            if (validations.insertValidation(payBean.getCustomerID(), payBean.getAmount()) == false){
+	                return("Unacceptable Values");
+	            }
+	            
 	           String[] paymentId = { "paymentID" };
 	            String sql =    " INSERT INTO payment (`customerID`,`paymentDateTime`,`amount`,`type`)" + 
 	                            " values (?,  CURRENT_TIMESTAMP(), ?, ?)";
@@ -53,7 +59,7 @@ public class Payment {
 	           
 	            connection.close();
 	            
-	            return ("Payment inseted successfully");
+	            return ("Payment inserted successfully");
 
 	        } catch (Exception e) {
 	            System.err.println(e.getMessage());
@@ -206,11 +212,18 @@ public class Payment {
 
     		try {
     			Connection connection = DBConnection.connect(); 
+    			PaymentValidations validations = new PaymentValidations();
     			
     			if (connection == null) {
     				return "Error while connecting to the database for updating payment."; 
     			}
 
+    			  // validating data
+	           
+    			 if (validations.updateValidation(payBean.getPaymentID()) == false){
+                     return ("No payments found with the corresponding ID");
+                 }
+	            
                 String sql = " UPDATE payment SET  amount = ?,paymentDateTime = CURRENT_TIMESTAMP(),type = ? WHERE paymentID = ?";
                 
              // create a prepared statement
@@ -221,7 +234,9 @@ public class Payment {
              // execute the statement   
                 preparedStatement.execute();
                 connection.close();
-    			
+                
+                
+               
     			output = "Payment updated successfully"; 
     			
     		} catch (Exception e) {
@@ -231,7 +246,7 @@ public class Payment {
     		return output;
     	}
         
-    //Method to delete a  payment details record
+    // delete a  payment  
     	public String deletePayment(PaymentBean payBean){
     			
     		String output = "";
@@ -239,9 +254,14 @@ public class Payment {
     		try	{
     				
     			Connection connection = DBConnection.connect();
-    				
+    			PaymentValidations validations = new PaymentValidations();	
     			if (connection == null)				
     				return "Error while connecting to the database for deleting.";
+    			
+    			 // validating data
+                if (validations.deleteValidation(payBean.getPaymentID()) == false){
+                    return ("No payments found with the corresponding ID");
+                }
     				
     			// Creating a prepared statement
     			String query = "DELETE FROM payment WHERE paymentID = ? ";
@@ -269,7 +289,8 @@ public class Payment {
                 }
                 
                 connection.close();
-    			output = " Payment record deleted successfully";
+                
+                output = " Payment record deleted successfully";
     		}
     		catch (Exception e)
     		{
