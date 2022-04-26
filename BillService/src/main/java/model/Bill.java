@@ -220,8 +220,7 @@ public class Bill {
             }
 
             // get units difference
-            //String d_units = GetMonthlyUnitsFromConnectionService(billBean);
-            String d_units = "401";
+            String d_units = GetMonthlyUnitsFromConnectionService(billBean);
             int diff_units = Integer.parseInt(d_units);
             billBean.calculateAmount(diff_units);
 
