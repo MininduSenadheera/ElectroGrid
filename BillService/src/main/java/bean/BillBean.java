@@ -76,6 +76,7 @@ public class BillBean {
         this.amount = amount;
     }
 
+    //calculate amount according to no.of units and adding tax rate
     public void calculateAmount(int units) {
         double total = 0;
 
@@ -94,6 +95,7 @@ public class BillBean {
         setAmount(total);
     }
 
+    //convert bill object to JSON object
     public String convertObjectToJsonString(BillBean billBean) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(billBean);
