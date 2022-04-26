@@ -28,8 +28,8 @@ public class Payment {
 	                               
 	            }
 	            
-	            // validating data
-	            if (validations.insertValidation(payBean.getCustomerID(), payBean.getAmount()) == false){
+	            // validating inserted values
+	            if (validations.dataValidation(payBean.getCustomerID(), payBean.getAmount()) == false){
 	                return("Unacceptable Values");
 	            }
 	            
@@ -87,7 +87,7 @@ public class Payment {
 				}
 		 
 		
-	}
+		}
 
 	//read all payment details
 		 public String readPaymentDetails() {
@@ -218,9 +218,9 @@ public class Payment {
     				return "Error while connecting to the database for updating payment."; 
     			}
 
-    			  // validating data
-	           
-    			 if (validations.updateValidation(payBean.getPaymentID()) == false){
+    			  
+	           //check payment id is valid or not
+    			 if (validations.checkID(payBean.getPaymentID()) == false){
                      return ("No payments found with the corresponding ID");
                  }
 	            
@@ -258,8 +258,8 @@ public class Payment {
     			if (connection == null)				
     				return "Error while connecting to the database for deleting.";
     			
-    			 // validating data
-                if (validations.deleteValidation(payBean.getPaymentID()) == false){
+    			 //check payment id is valid or not
+                if (validations.checkID(payBean.getPaymentID()) == false){
                     return ("No payments found with the corresponding ID");
                 }
     				
