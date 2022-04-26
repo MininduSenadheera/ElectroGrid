@@ -21,16 +21,16 @@ public class PaymentService {
 		}
 		
 	// insert  Payment
-		 @POST
-			@Path("/")
-			@Consumes(MediaType.APPLICATION_JSON)
-			@Produces(MediaType.APPLICATION_JSON)
-			public String newPill(String paymentData) {
-				PaymentBean payBean = new PaymentBean();
-				payBean.convertStringToJSONInsert(paymentData);
+		@POST
+		@Path("/")
+		@Consumes(MediaType.APPLICATION_JSON)
+		@Produces(MediaType.APPLICATION_JSON)
+		public String newPill(String paymentData) {
+			PaymentBean payBean = new PaymentBean();
+			payBean.convertStringToJSONInsert(paymentData);
 
-				String response =payObject.newPayment(payBean);
-				return response;
+			String response =payObject.newPayment(payBean);
+			return response;
 			}
 		
 	// get Payments by customer ID

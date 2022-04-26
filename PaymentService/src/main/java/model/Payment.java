@@ -17,7 +17,7 @@ import okhttp3.RequestBody;
 public class Payment {
 	
 	//Insert payment
-	public String newPayment(PaymentBean payBean) {
+		public String newPayment(PaymentBean payBean) {
 
 	        try {
 	            Connection connection = DBConnection.connect();
@@ -68,7 +68,7 @@ public class Payment {
 	    }
 	
 	
-	 //updating the bill with the inserted payment ID 
+	//updating the bill with the inserted payment ID 
 		private String GetUpdateServicefromBill(PaymentBean payBean) {
 			 
 			 try {
@@ -90,7 +90,7 @@ public class Payment {
 	}
 
 	//read all payment details
-		 public String readPaymentDetails() {
+		public String readPaymentDetails() {
 			
 			String output = "";
 						
@@ -206,7 +206,7 @@ public class Payment {
         
     }   
 	 	
-     // updating Payment
+    // updating Payment
         public String updatePayment(PaymentBean payBean) {
     		String output = ""; 
 
@@ -218,11 +218,10 @@ public class Payment {
     				return "Error while connecting to the database for updating payment."; 
     			}
 
-    			  // validating data
-	           
-    			 if (validations.updateValidation(payBean.getPaymentID()) == false){
+    		// validating data
+	           	if (validations.updateValidation(payBean.getPaymentID()) == false){
                      return ("No payments found with the corresponding ID");
-                 }
+                }
 	            
                 String sql = " UPDATE payment SET  amount = ?,paymentDateTime = CURRENT_TIMESTAMP(),type = ? WHERE paymentID = ?";
                 
@@ -304,7 +303,7 @@ public class Payment {
 
     //Update bill while deleting payments
 		private String GetUpdateServicefromBill(int billID) {
-			// TODO Auto-generated method stub
+			
 			try {
 				MediaType JSONType = MediaType.get("application/json; charset=utf-8");
 				OkHttpClient client = new OkHttpClient();
